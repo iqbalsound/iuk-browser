@@ -1,0 +1,23 @@
+# IUK Browser: Linux x86_64 release build of Firefox ESR with IUK Browser branding.
+# Used by build/build-source.sh (copied to <firefox-src>/mozconfig).
+ac_add_options --enable-application=browser
+ac_add_options --with-branding=browser/branding/iuk-browser
+ac_add_options --with-distribution-id=org.iuk
+
+# The bundled sync/vault add-on lives in distribution/extensions (app scope) and is not Mozilla-signed.
+ac_add_options --with-unsigned-addon-scopes=app,system
+
+ac_add_options --enable-release
+ac_add_options --enable-optimize
+ac_add_options --disable-debug
+ac_add_options --disable-tests
+ac_add_options --disable-crashreporter
+ac_add_options --disable-updater
+
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-iuk-browser
+mk_add_options AUTOCLOBBER=1
+
+# No telemetry / data reporting compiled in
+export MOZ_TELEMETRY_REPORTING=
+export MOZ_DATA_REPORTING=
+export MOZ_SERVICES_HEALTHREPORT=

@@ -1,0 +1,14 @@
+{
+  "name": "IUK Browser",
+  "slug": "iuk-browser",
+  "vendor": "IUK",
+  "bundle_id": "org.iuk.browser",
+  "repo_url": "https://github.com/iqbalsound/iuk-browser",
+  "colors": {
+    "navy": "#0b1740",
+    "navy_light": "#16296b",
+    "blue": "#3a63ff",
+    "teal": "#10c4a6",
+    "private_dark": "#1a0b3d"
+  }
+}

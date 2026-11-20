@@ -1,0 +1,20 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install
+      - run: npm test
+      - run: npm run lint
+      - run: npm run build
+      - name: Branding assets are up to date
+        run: |
+          pip install -r branding/requirements.txt
+          python3 branding/generate.py
+          git diff --stat --exit-code -- branding/generated extension/icons || echo "::warning::branding/generated differs from a fresh render (fonts or library versions); regenerate and commit if you changed the artwork"
+      - uses: actions/upload-artifact@v4
+        with: { name: extension, path: dist/*.zip }

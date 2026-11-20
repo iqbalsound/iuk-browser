@@ -1,0 +1,14 @@
+{
+  "name": "iuk-browser",
+  "version": "0.1.0",
+  "description": "Gecko-based browser distribution with encrypted bookmark/password sync, themes and color invert",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "lint": "web-ext lint --source-dir extension",
+    "build": "web-ext build --source-dir extension --artifacts-dir dist --overwrite-dest",
+    "server": "node server/server.js"
+  },
+  "devDependencies": { "web-ext": "^8.0.0" }
+}

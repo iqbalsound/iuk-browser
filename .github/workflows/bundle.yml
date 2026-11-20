@@ -1,0 +1,26 @@
+# Quick personal bundles: official Firefox ESR binaries + the IUK Browser layer and icons.
+# These still carry Mozilla's binaries; do NOT attach them to a public release. For publishable
+# builds use the "Source build" workflow or build/build-source.sh (unofficial branding).
+name: Bundles (personal)
+on: workflow_dispatch
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install nfpm
+        run: |
+          curl -fsSL -o nfpm.tgz https://github.com/goreleaser/nfpm/releases/download/v2.41.0/nfpm_2.41.0_Linux_x86_64.tar.gz
+          sudo tar -xzf nfpm.tgz -C /usr/local/bin nfpm
+      - run: packaging/build-bundle.sh linux 0.1.0
+        env: { GITHUB_REPOSITORY: "${{ github.repository }}" }
+      - uses: actions/upload-artifact@v4
+        with: { name: linux-packages, path: "dist/*.deb\ndist/*.rpm" }
+  windows:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y nsis p7zip-full zip
+      - run: packaging/build-bundle.sh windows 0.1.0
+      - uses: actions/upload-artifact@v4
+        with: { name: windows-packages, path: "dist/*-setup.exe\ndist/*-portable.zip" }

@@ -1,0 +1,26 @@
+{
+  "policies": {
+    "DisableTelemetry": true,
+    "DisableFirefoxStudies": true,
+    "DisablePocket": true,
+    "DisableFirefoxAccounts": true,
+    "DisableAppUpdate": true,
+    "DontCheckDefaultBrowser": true,
+    "OverrideFirstRunPage": "",
+    "OverridePostUpdatePage": "",
+    "NoDefaultBookmarks": true,
+    "PasswordManagerEnabled": false,
+    "OfferToSaveLogins": false,
+    "EnableTrackingProtection": { "Value": true, "Cryptomining": true, "Fingerprinting": true },
+    "Preferences": {
+      "xpinstall.signatures.required": { "Value": false, "Status": "locked" }
+    },
+    "ExtensionSettings": {
+      "iuk-browser@iuk.local": {
+        "installation_mode": "force_installed",
+        "install_url": "@XPI_URL@",
+        "default_area": "navbar"
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.build/
+server/data/
+__pycache__/
+*.pyc
+*.xpi
+.DS_Store

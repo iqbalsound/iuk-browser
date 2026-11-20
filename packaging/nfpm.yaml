@@ -1,0 +1,23 @@
+name: iuk-browser
+arch: amd64
+platform: linux
+version: ${VERSION}
+release: "1"
+section: web
+priority: optional
+maintainer: ${MAINTAINER}
+description: IUK Browser, a Gecko-based browser with end-to-end encrypted bookmark and password sync, themes and color invert.
+homepage: https://github.com/${GITHUB_REPOSITORY}
+license: MPL-2.0
+contents:
+  - src: ./dist/stage/linux/usr
+    dst: /usr
+    type: tree
+scripts:
+  postinstall: ./packaging/postinstall.sh
+  postremove: ./packaging/postinstall.sh
+overrides:
+  deb:
+    depends: [libgtk-3-0, libdbus-glib-1-2, libx11-xcb1, libxtst6, "libasound2t64 | libasound2"]
+  rpm:
+    depends: [gtk3, dbus-glib, libXtst, alsa-lib]
