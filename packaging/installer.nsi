@@ -36,9 +36,9 @@ Section "Install"
   CreateShortCut "$SMPROGRAMS\IUK Browser (Private).lnk" "$INSTDIR\firefox.exe" "-private-window" "$INSTDIR\private.ico" 0
 !else
   ; bundle on official Firefox binaries: own profile, %APPDATA% expanded by cmd at launch, minimized so no console shows
-  CreateShortCut "$SMPROGRAMS\IUK Browser.lnk" "$SYSDIR\cmd.exe" '/c start "" "$INSTDIR\firefox.exe" -no-remote -profile "%APPDATA%\IUK Browser\profile"' "$INSTDIR\iuk-browser.ico" 0 SW_SHOWMINNOACTIVE
-  CreateShortCut "$DESKTOP\IUK Browser.lnk" "$SYSDIR\cmd.exe" '/c start "" "$INSTDIR\firefox.exe" -no-remote -profile "%APPDATA%\IUK Browser\profile"' "$INSTDIR\iuk-browser.ico" 0 SW_SHOWMINNOACTIVE
-  CreateShortCut "$SMPROGRAMS\IUK Browser (Private).lnk" "$SYSDIR\cmd.exe" '/c start "" "$INSTDIR\firefox.exe" -no-remote -profile "%APPDATA%\IUK Browser\profile" -private-window' "$INSTDIR\private.ico" 0 SW_SHOWMINNOACTIVE
+  CreateShortCut "$SMPROGRAMS\IUK Browser.lnk" "$SYSDIR\cmd.exe" '/c start "" "$INSTDIR\firefox.exe" -no-remote -profile "%APPDATA%\IUK Browser\profile"' "$INSTDIR\iuk-browser.ico" 0 SW_SHOWMINIMIZED
+  CreateShortCut "$DESKTOP\IUK Browser.lnk" "$SYSDIR\cmd.exe" '/c start "" "$INSTDIR\firefox.exe" -no-remote -profile "%APPDATA%\IUK Browser\profile"' "$INSTDIR\iuk-browser.ico" 0 SW_SHOWMINIMIZED
+  CreateShortCut "$SMPROGRAMS\IUK Browser (Private).lnk" "$SYSDIR\cmd.exe" '/c start "" "$INSTDIR\firefox.exe" -no-remote -profile "%APPDATA%\IUK Browser\profile" -private-window' "$INSTDIR\private.ico" 0 SW_SHOWMINIMIZED
 !endif
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\IUK Browser" "DisplayName" "IUK Browser"

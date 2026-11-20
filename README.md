@@ -2,7 +2,8 @@
 
 A Gecko (Firefox ESR) based browser with its own name, icons and branding, plus:
 
-- **Encrypted sync of bookmarks and passwords** between devices that share the same *user name + secret connectivity key*
+- **Encrypted sync of bookmarks and passwords** between devices that share the same *user name + secret connectivity key*, protected with **Argon2id**
+- **QR pairing**: set up a second device by scanning a QR code instead of retyping the key
 - A built-in **password manager** (vault, autofill, save prompt, generator, CSV import/export)
 - **Themes** (7 presets + custom colors) and **color invert** (global, per site, plus brightness/contrast/sepia)
 - Packages for **DEB**, **RPM** and **Windows** (installer + portable zip)
@@ -47,13 +48,18 @@ python3 branding/generate.py      # re-render branding/generated/, extension ico
 ## How sync and the vault work
 
 1. You enter the same **user name** and **secret key** on each device.
-2. PBKDF2-HMAC-SHA256 (600,000 iterations, salt = user name) yields 512 bits: the first 256 become the **AES-256-GCM key** (never leaves the device, non-extractable), the last 256 the **server token**. Knowing the token tells you nothing about the key.
+2. **Argon2id** (64 MiB, 3 passes, 1 lane, salt derived from the user name; cross-checked against the reference libargon2) yields 512 bits: the first 256 become the **AES-256-GCM key** (never leaves the device, non-extractable), the last 256 the **server token**. Knowing the token tells you nothing about the key. Vaults created by 1.0 used PBKDF2 and are **migrated automatically** the next time they are unlocked (see CHANGELOG).
 3. Bookmarks and logins merge per item (last write wins, tombstones for deletes, 90-day clean-up), are encrypted, and are uploaded with optimistic concurrency (`If-Match`). The server sees only ciphertext.
 4. The vault is also encrypted at rest on the device and decrypted only in memory after you unlock. It locks on every restart.
 
 Bookmarks are keyed by URL and keep their folder path (Toolbar / Menu / Other). Passwords are keyed by `site|username`, so the same login created on two devices merges instead of duplicating.
 
 **Choose a strong key.** Anyone holding the encrypted blob can guess offline. Use the built-in generator (32 random characters) and store the key safely: it cannot be recovered. A mistyped key on a *new* device does not error; it is simply a different, empty account. If nothing syncs, re-check the key.
+
+## QR pairing
+
+On a set-up device: toolbar **QR** button (or Settings → *Pair another device*) → re-enter your key → a QR appears for 90 seconds. On the new device: toolbar icon → **Scan pairing QR from another device** → camera, image file or pasted code → confirm → it joins and syncs.
+The QR contains your key: only show it to your own device, never post a screenshot. Re-entering the key means an unlocked but unattended browser cannot reveal it.
 
 ## Relay server
 
@@ -66,7 +72,7 @@ Put it behind HTTPS, for example Caddy: `sync.example.com { reverse_proxy 127.0.
 
 ```bash
 npm install
-npm test                 # crypto, merge, display CSS, relay, two-device sync
+npm test                 # crypto (both KDFs, known-answer), merge, relay, two-device sync, PBKDF2->Argon2id migration, QR pairing
 npm run lint             # web-ext lint
 npx web-ext run --source-dir extension
 ```
@@ -76,9 +82,11 @@ npx web-ext run --source-dir extension
 | `Ctrl+Shift+L` | Fill the saved login on this page |
 | `Alt+Shift+I` | Toggle color invert on all sites |
 
-## Publishing to GitHub over SSH
+## Publishing and releasing
 
-See [docs/GITHUB.md](docs/GITHUB.md) or run `scripts/publish-to-github.sh git@github.com:<user>/iuk-browser.git`. Publish the source, the extension, and **source-build** binaries. Do not attach the Mozilla-branded quick bundles.
+- Push over SSH: [docs/GITHUB.md](docs/GITHUB.md) or `scripts/publish-to-github.sh git@github.com:<user>/iuk-browser.git`.
+- Release: `git tag v1.1.0 && git push origin v1.1.0` runs `.github/workflows/release.yml`, which builds the extension, **DEB, RPM and the Windows installer + portable zip** and drafts a GitHub Release. See [docs/RELEASING.md](docs/RELEASING.md).
+- Publish the source, the extension, and **source-build** binaries. Do not attach the Mozilla-branded quick bundles.
 
 ## Known limitations
 
@@ -87,11 +95,12 @@ See [docs/GITHUB.md](docs/GITHUB.md) or run `scripts/publish-to-github.sh git@gi
 - Firefox's built-in password manager is disabled by policy (extensions cannot read it); use *Import CSV* to migrate.
 - Autofill works in the top frame only, on explicit action, to resist hidden-form phishing.
 - Quick bundles use an unsigned add-on workaround that Firefox honors on ESR/unbranded builds; source builds use `--with-unsigned-addon-scopes=app,system` instead.
-- Windows quick bundles keep Firefox's embedded `.exe` icon; shortcuts, installer and jump-list use IUK icons. A source build fixes this.
+- Windows quick bundles keep Firefox's embedded `.exe` icon and launch through a minimized `cmd` window; shortcuts, installer and jump-list use IUK icons. A source build fixes both.
+- Argon2id runs in the extension's background page (about a second); a Web Worker is on the TODO list.
 
 ## Roadmap
 
-See [TODO.md](TODO.md): **QR pairing** and **Argon2id** are planned next; then the first-build verification, auto-update channel and Windows CI.
+See [TODO.md](TODO.md) and [CHANGELOG.md](CHANGELOG.md). QR pairing and Argon2id shipped in 1.1.0; next are the first-build verification, one-use pairing tokens, a Web Worker for key derivation and an update channel.
 
 ## License
 

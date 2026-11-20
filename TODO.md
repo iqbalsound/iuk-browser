@@ -1,9 +1,14 @@
 # TODO
 
-## Planned next (deferred on purpose)
+## Done in 1.1.0
 
-- [ ] **QR pairing**: show a QR code on the first device containing server URL + user name + key (shown only locally, never sent anywhere); scan it on the second device instead of retyping the secret key.
-- [ ] **Argon2id** key derivation: replace PBKDF2 (600k iterations) with Argon2id via a bundled WASM build. Needs a versioned KDF header in the vault and in the synced blob so existing data can be migrated.
+- [x] **QR pairing** (show on one device, scan on the other; camera, image or pasted code)
+- [x] **Argon2id** key derivation with automatic PBKDF2 migration
+
+## Planned next
+
+- [ ] Run Argon2id in a Web Worker so the browser UI never pauses while deriving the key
+- [ ] Time-limited, one-use pairing tokens (so a leaked QR screenshot cannot be reused after pairing)
 
 ## First source build: verify
 

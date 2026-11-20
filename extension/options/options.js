@@ -33,6 +33,12 @@ async function build() {
         catch (e) { note(syncMsg, 'err', e.message); }
       } }, 'Save and sync')), syncMsg);
 
+  const secPair = h('section', {}, h('h2', {}, 'Pair another device'),
+    h('p', { class: 'muted' }, 'Show a QR code on this device and scan it with the new one, so you never retype the secret key. Key protection: ' + (s.kdf === 'argon2id-v2' ? 'Argon2id' : 'PBKDF2 (will upgrade to Argon2id the next time you unlock)') + '.'),
+    h('div', { class: 'row' },
+      h('button', { class: 'primary', onclick: () => browser.tabs.create({ url: browser.runtime.getURL('pair/pair.html#show') }) }, 'Show pairing QR'),
+      h('button', { onclick: () => browser.tabs.create({ url: browser.runtime.getURL('pair/pair.html#scan') }) }, 'Scan a QR on this device')));
+
   // ---- Theme ----
   const pick = async (t) => { await browser.storage.local.set({ vf_theme: t }); build(); };
   const card = (id, name, bg, fg, accent) => h('button', { class: 'sw' + (theme.id === id ? ' on' : ''), onclick: () => pick(id === 'system' ? { id } : { id }) },
@@ -88,6 +94,6 @@ async function build() {
     h('p', { class: 'muted' }, 'Removes the local vault and sync settings from this browser. Data already on the sync server is untouched.'),
     h('button', { class: 'danger', onclick: async () => { if (confirm('Remove the local vault from this device?')) { await send('wipe'); build(); } } }, 'Forget this device'));
 
-  app.replaceChildren(h('h1', {}, 'IUK Browser settings'), secSync, secTheme, secDisplay, secPw, secDanger);
+  app.replaceChildren(h('h1', {}, 'IUK Browser settings'), secSync, secPair, secTheme, secDisplay, secPw, secDanger);
 }
 build();

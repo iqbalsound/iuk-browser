@@ -13,6 +13,7 @@ jobs:
       - run: npm run build
       - name: Branding assets are up to date
         run: |
+          sudo apt-get update && sudo apt-get install -y libcairo2
           pip install -r branding/requirements.txt
           python3 branding/generate.py
           git diff --stat --exit-code -- branding/generated extension/icons || echo "::warning::branding/generated differs from a fresh render (fonts or library versions); regenerate and commit if you changed the artwork"

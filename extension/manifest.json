@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "IUK Browser Sync & Vault",
-  "version": "0.1.0",
-  "description": "End-to-end encrypted bookmark and password sync with a built-in password manager, themes and color invert.",
+  "version": "1.1.0",
+  "description": "End-to-end encrypted bookmark and password sync (Argon2id), QR device pairing, password manager, themes and color invert.",
   "browser_specific_settings": {
     "gecko": {
       "id": "iuk-browser@iuk.local",
@@ -32,6 +32,7 @@
   ],
   "background": {
     "scripts": [
+      "vendor/argon2.umd.min.js",
       "shared/common.js",
       "background/crypto.js",
       "background/merge.js",
@@ -89,5 +90,6 @@
       },
       "description": "Toggle color invert on all sites"
     }
-  }
+  },
+  "content_security_policy": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
 }

@@ -48,7 +48,8 @@ function viewSetup() {
   } }, 'Create vault');
   mount(h('h1', {}, 'Set up IUK Browser'),
     h('p', { class: 'muted' }, 'Use the same user name and secret key on your other device to sync. The key never leaves this device and cannot be recovered. Write it down.'),
-    h('div', { class: 'col' }, user, h('div', { class: 'row' }, secret, gen), server, err, go));
+    h('div', { class: 'col' }, user, h('div', { class: 'row' }, secret, gen), server, err, go,
+      h('button', { onclick: () => { browser.tabs.create({ url: browser.runtime.getURL('pair/pair.html#scan') }); window.close(); } }, 'Scan pairing QR from another device')));
 }
 
 function viewUnlock(s) {
@@ -56,7 +57,7 @@ function viewUnlock(s) {
   const secret = h('input', { type: 'password', placeholder: 'Secret connectivity key', autocomplete: 'off' });
   const err = h('div');
   const go = async () => {
-    err.replaceChildren(h('div', { class: 'muted' }, 'Unlocking…'));
+    err.replaceChildren(h('div', { class: 'muted' }, s.upgradePending ? 'Unlocking and upgrading key protection to Argon2id (takes a few seconds)…' : 'Unlocking…'));
     try { await send('unlock', { username: user.value, secret: secret.value }); render(); }
     catch (e) { err.replaceChildren(msg('err', e.message)); }
   };
@@ -71,13 +72,15 @@ async function viewMain(s) {
   const syncLine = s.lastError ? msg('err', 'Sync error: ' + s.lastError) : h('div', { class: 'muted' }, s.server ? 'Last sync: ' + when : 'Sync server not set (local only)');
   const head = h('div', { class: 'row' }, h('h1', {}, 'IUK Browser'),
     h('button', { title: 'Sync now', onclick: async (e) => { e.target.disabled = true; try { await send('sync'); flash = 'Synced'; } catch (er) { flash = null; } render(); } }, '⟳'),
+    h('button', { title: 'Pair another device (QR)', onclick: () => { browser.tabs.create({ url: browser.runtime.getURL('pair/pair.html#show') }); window.close(); } }, 'QR'),
     h('button', { title: 'Lock', onclick: async () => { await send('lock'); render(); } }, 'Lock'),
     h('button', { title: 'Settings', onclick: () => { browser.runtime.openOptionsPage(); window.close(); } }, '⚙'));
   const names = { site: 'This site', all: 'All', add: 'Add', display: 'Display', gen: 'Generator' };
   const tabs = h('div', { class: 'tabs' }, Object.entries(names).map(([k, v]) =>
     h('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; flash = null; render(); } }, v)));
   const body = h('div');
-  mount(head, syncLine, flash ? msg('ok', flash) : null, tabs, body);
+  const upgrade = s.upgradePending ? msg('err', 'Key protection upgrade pending. Lock and unlock again while online to finish it.') : null;
+  mount(head, syncLine, upgrade, flash ? msg('ok', flash) : null, tabs, body);
   const views = { site: tabSite, all: tabAll, add: tabAdd, display: tabDisplay, gen: tabGen };
   await views[tab](body);
 }

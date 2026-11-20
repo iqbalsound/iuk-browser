@@ -21,6 +21,6 @@
 ## Releases
 
 ```bash
-git tag v0.1.0 && git push origin v0.1.0
+git tag v1.1.0 && git push origin v1.1.0
 ```
-Attach only what you are allowed to redistribute: the extension `.zip`/`.xpi`, and **binaries from the source build** (unofficial branding). Do not attach the Mozilla-branded quick bundles from the *Bundles (personal)* workflow.
+The tag starts `.github/workflows/release.yml` (DEB, RPM, Windows installer + zip, extension, checksums) and drafts a GitHub Release. See [RELEASING.md](RELEASING.md) for the build modes and what may legally be attached.

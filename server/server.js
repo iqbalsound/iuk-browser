@@ -33,6 +33,10 @@ function createServer({ dataDir, rateLimit = 120, trustProxy = false }) {
       if (!current) return send(404, 'No data');
       return send(200, current, { ETag: etag(current) });
     }
+    if (req.method === 'DELETE') {
+      if (current) fs.unlinkSync(file);
+      return send(200, 'ok');
+    }
     if (req.method === 'PUT') {
       const chunks = []; let size = 0, dead = false;
       req.on('data', (c) => { size += c.length; if (size > MAX_BODY) { dead = true; send(413, 'Too large'); req.destroy(); } else chunks.push(c); });

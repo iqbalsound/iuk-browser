@@ -9,8 +9,7 @@ cd "$(dirname "$0")/.."
 REPO="$(pwd)"; WORK="${WORK:-$REPO/.build}"; SRC="$WORK/firefox"
 UPSTREAM="https://github.com/mozilla-firefox/firefox"
 
-REF="${FIREFOX_REF:-$(git ls-remote --tags "$UPSTREAM" 'FIREFOX_*esr*_RELEASE' | awk '{print $2}' | sed 's#refs/tags/##' | sort -V | tail -1)}"
-[ -n "$REF" ] || { echo "Could not determine an ESR tag; set FIREFOX_REF"; exit 1; }
+REF="$(build/resolve-esr-tag.sh)"
 FFVER="$(echo "$REF" | sed -E 's/^FIREFOX_([0-9]+)_([0-9]+)_([0-9]+)esr_RELEASE$/\1.\2.\3/; s/^FIREFOX_([0-9]+)_([0-9]+)esr_RELEASE$/\1.\2/')"
 echo ">> Firefox source ref: $REF (version $FFVER)"
 
@@ -36,4 +35,5 @@ TARBALL="$(ls -t obj-iuk-browser/dist/*.tar.* | head -1)"
 echo ">> Built: $TARBALL"
 [ "${SKIP_PACKAGE:-0}" = 1 ] && exit 0
 cd "$REPO"
-SOURCE_BUILD=1 FIREFOX_TARBALL="$SRC/$TARBALL" packaging/build-bundle.sh linux "$FFVER"
+# Package version = the IUK Browser release (IUK_VERSION); falls back to the Firefox version for ad-hoc builds.
+SOURCE_BUILD=1 FIREFOX_TARBALL="$SRC/$TARBALL" packaging/build-bundle.sh linux "${IUK_VERSION:-$FFVER}"

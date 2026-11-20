@@ -131,7 +131,32 @@ var VFCommon = (function () {
     }));
   }
 
+  // ---- device pairing (QR / text code) ----
+  const PAIR_PREFIX = 'IUKB1:';
+  function encodePairing(o) {
+    const bytes = new TextEncoder().encode(JSON.stringify({ u: o.u, k: o.k, s: o.s || '' }));
+    let bin = ''; bytes.forEach((b) => { bin += String.fromCharCode(b); });
+    return PAIR_PREFIX + btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+  function decodePairing(text) {
+    text = String(text || '').trim();
+    if (!text.startsWith(PAIR_PREFIX)) throw new Error('This is not an IUK Browser pairing code');
+    let b = text.slice(PAIR_PREFIX.length).replace(/-/g, '+').replace(/_/g, '/');
+    while (b.length % 4) b += '=';
+    let o;
+    try { o = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(b), (c) => c.charCodeAt(0)))); }
+    catch (e) { throw new Error('The pairing code is damaged'); }
+    if (!o || typeof o.u !== 'string' || !o.u.trim() || typeof o.k !== 'string' || o.k.length < 12) throw new Error('The pairing code is incomplete');
+    let server = '';
+    if (o.s) {
+      let u; try { u = new URL(o.s); } catch (e) { throw new Error('The pairing code has an invalid server address'); }
+      if (u.protocol !== 'https:' && u.protocol !== 'http:') throw new Error('The pairing code has an invalid server address');
+      server = o.s.replace(/\/+$/, '');
+    }
+    return { username: o.u.trim(), secret: o.k, server };
+  }
+
   return { DISPLAY_DEFAULT, normDisplay, isInverted, displayCSS, makeTheme, THEMES, mix, luminance,
-           hostFrom, hostMatches, genPassword, parseCSV, toCSV, loginsFromCSV };
+           hostFrom, hostMatches, genPassword, parseCSV, toCSV, loginsFromCSV, PAIR_PREFIX, encodePairing, decodePairing };
 })();
 if (typeof module !== 'undefined' && module.exports) module.exports = VFCommon;

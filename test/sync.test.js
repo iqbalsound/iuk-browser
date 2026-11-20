@@ -1,47 +1,7 @@
-/* Runs the real background modules (crypto, merge, bookmarks, core) for two simulated devices, each with its
-   own mocked browser.* API, talking to the real relay server. */
 const test = require('node:test'), assert = require('node:assert/strict');
-const vm = require('node:vm'), fs = require('node:fs'), os = require('node:os'), path = require('node:path');
+const fs = require('node:fs'), os = require('node:os'), path = require('node:path');
 const { createServer } = require('../server/server.js');
-const read = (f) => fs.readFileSync(path.join(__dirname, '../extension', f), 'utf8');
-
-function makeBrowser() {
-  const store = {}; let n = 0;
-  const nodes = {};
-  const add = (o) => { nodes[o.id] = o; if (o.parentId) nodes[o.parentId].children.push(o); return o; };
-  const root = add({ id: 'root________', type: 'folder', title: '', children: [] });
-  for (const id of ['toolbar_____', 'menu________', 'unfiled_____', 'mobile______']) add({ id, type: 'folder', title: id, parentId: root.id, children: [] });
-  const strip = (x) => Object.assign({}, x, { children: x.children && x.children.map(strip) });
-  return {
-    store, nodes,
-    browser: {
-      storage: { local: {
-        get: async (k) => { const r = {}; for (const key of [].concat(k)) if (key in store) r[key] = JSON.parse(JSON.stringify(store[key])); return r; },
-        set: async (o) => { for (const [k, v] of Object.entries(o)) store[k] = JSON.parse(JSON.stringify(v)); },
-        remove: async (k) => { for (const key of [].concat(k)) delete store[key]; },
-      } },
-      bookmarks: {
-        getTree: async () => [strip(root)],
-        getChildren: async (id) => nodes[id].children.map((c) => Object.assign({}, c, { children: undefined })),
-        create: async ({ parentId, title, url, type }) => add({ id: 'n' + (++n), parentId, title, url, type: url ? 'bookmark' : 'folder', children: url ? undefined : [] }),
-        search: async ({ url }) => Object.values(nodes).filter((x) => x.url === url),
-        update: async (id, ch) => Object.assign(nodes[id], ch),
-        move: async (id, { parentId }) => { const o = nodes[id]; nodes[o.parentId].children = nodes[o.parentId].children.filter((c) => c !== o); o.parentId = parentId; nodes[parentId].children.push(o); },
-        remove: async (id) => { const o = nodes[id]; nodes[o.parentId].children = nodes[o.parentId].children.filter((c) => c !== o); delete nodes[id]; },
-      },
-    },
-  };
-}
-
-function device() {
-  const m = makeBrowser();
-  const ctx = vm.createContext({ browser: m.browser, fetch, crypto: globalThis.crypto, TextEncoder, TextDecoder, btoa, atob, URL, console });
-  for (const f of ['shared/common.js', 'background/crypto.js', 'background/merge.js', 'background/bookmarks.js', 'background/core.js']) vm.runInContext(read(f), ctx, { filename: f });
-  const core = vm.runInContext('VFCore', ctx);
-  const bm = (parentId, title, url) => m.browser.bookmarks.create({ parentId, title, url });
-  const urls = () => Object.values(m.nodes).filter((x) => x.url).map((x) => x.url).sort();
-  return { core, m, bm, urls };
-}
+const { device } = require('./helpers.js');
 
 test('two devices: setup, sync bookmarks + passwords, deletes propagate, wrong key rejected', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'vfs-'));

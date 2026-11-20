@@ -5,15 +5,38 @@ const M = require('../extension/background/merge.js');
 const V = require('../extension/shared/common.js');
 const { createServer } = require('../server/server.js');
 
-test('same user+secret derives same key/token; different secret does not', async () => {
-  const a = await C.deriveKeys('Me@X.com', 'correct horse battery', 1000);
-  const b = await C.deriveKeys(' me@x.com ', 'correct horse battery', 1000);
-  const c = await C.deriveKeys('me@x.com', 'wrong horse battery!!', 1000);
-  assert.equal(a.token, b.token); assert.notEqual(a.token, c.token); assert.equal(a.token.length, 64);
-  const blob = await C.encrypt(a.key, { hello: 'wörld' });
-  assert.deepEqual(await C.decrypt(b.key, blob), { hello: 'wörld' });
-  await assert.rejects(() => C.decrypt(c.key, blob));
-  await assert.rejects(() => C.decrypt(a.key, blob.slice(0, -4) + 'AAAA'));
+const DEFAULTS = JSON.parse(JSON.stringify(C.PARAMS));
+C.PARAMS['argon2id-v2'] = { memoryKiB: 256, passes: 1, lanes: 1 };
+C.PARAMS['pbkdf2-v1'].iterations = 1000;
+
+test('same user+secret derives same key/token; different secret does not (both KDFs)', async () => {
+  for (const kdf of [C.KDF_LEGACY, C.KDF_LATEST]) {
+    const a = await C.deriveKeys('Me@X.com', 'correct horse battery', kdf);
+    const b = await C.deriveKeys(' me@x.com ', 'correct horse battery', kdf);
+    const c = await C.deriveKeys('me@x.com', 'wrong horse battery!!', kdf);
+    assert.equal(a.token, b.token); assert.notEqual(a.token, c.token); assert.equal(a.token.length, 64);
+    const blob = await C.encrypt(a.key, { hello: 'wörld' });
+    assert.deepEqual(await C.decrypt(b.key, blob), { hello: 'wörld' });
+    await assert.rejects(() => C.decrypt(c.key, blob));
+    await assert.rejects(() => C.decrypt(a.key, blob.slice(0, -4) + 'AAAA'));
+  }
+});
+
+test('PBKDF2 and Argon2id vaults never collide on the server token', async () => {
+  const a = await C.deriveKeys('me@x.com', 'same-secret-for-both', C.KDF_LEGACY);
+  const b = await C.deriveKeys('me@x.com', 'same-secret-for-both', C.KDF_LATEST);
+  assert.notEqual(a.token, b.token);
+  await assert.rejects(() => C.deriveKeys('me@x.com', 'x', 'md5-v0'), /Unknown key derivation/);
+});
+
+test('known answer: production Argon2id parameters are frozen', async () => {
+  const saved = C.PARAMS['argon2id-v2'];
+  C.PARAMS['argon2id-v2'] = DEFAULTS['argon2id-v2'];
+  try {
+    assert.deepEqual(DEFAULTS['argon2id-v2'], { memoryKiB: 65536, passes: 3, lanes: 1 });
+    const { token } = await C.deriveKeys('me@x.com', 'correct horse battery staple', C.KDF_LATEST);
+    assert.equal(token, '5f0dac10d64f3e189dcb1df547cd32ddd7bcc834d51ae789cffac5f7eb21be0b');
+  } finally { C.PARAMS['argon2id-v2'] = saved; }
 });
 
 test('merge: newest wins, tombstone beats older edit, new items unioned', () => {
@@ -66,8 +89,8 @@ test('relay server + two devices converge (end to end)', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'vf-'));
   const srv = createServer({ dataDir: dir }); await new Promise((r) => srv.listen(0, '127.0.0.1', r));
   const base = 'http://127.0.0.1:' + srv.address().port;
-  const dev = async () => C.deriveKeys('me@x.com', 'a-long-shared-secret', 1000);
-  const A = await dev(), B = await dev(), bad = await C.deriveKeys('me@x.com', 'another-secret-xx', 1000);
+  const dev = async () => C.deriveKeys('me@x.com', 'a-long-shared-secret');
+  const A = await dev(), B = await dev(), bad = await C.deriveKeys('me@x.com', 'another-secret-xx');
   const H = (t, x) => ({ headers: { Authorization: 'Bearer ' + t, ...x } });
   assert.equal((await fetch(base + '/v1/blob', H(A.token))).status, 404);
   assert.equal((await fetch(base + '/v1/blob', { headers: {} })).status, 401);
@@ -90,5 +113,30 @@ test('relay server + two devices converge (end to end)', async () => {
   assert.equal((await fetch(base + '/v1/blob', H(bad.token))).status, 404);
   const fresh = (await fetch(base + '/v1/blob', H(A.token))).headers.get('ETag');
   assert.equal((await fetch(base + '/v1/blob', { method: 'PUT', body: 'not encrypted', ...H(A.token, { 'If-Match': fresh }) })).status, 400);
+  srv.closeAllConnections(); srv.close();
+});
+
+test('pairing code round trip and validation', () => {
+  const code = V.encodePairing({ u: 'me@x.com', k: 'abcdefghijklmnopqrstuvwxyz123456', s: 'https://sync.example.com/' });
+  assert.ok(code.startsWith('IUKB1:')); assert.match(code, /^IUKB1:[A-Za-z0-9_-]+$/);
+  assert.deepEqual(V.decodePairing(' ' + code + '\n'), { username: 'me@x.com', secret: 'abcdefghijklmnopqrstuvwxyz123456', server: 'https://sync.example.com' });
+  assert.equal(V.decodePairing(V.encodePairing({ u: 'ü@x.com', k: 'k'.repeat(12) })).username, 'ü@x.com');
+  assert.throws(() => V.decodePairing('hello'), /not an IUK Browser pairing code/);
+  assert.throws(() => V.decodePairing('IUKB1:%%%'), /damaged/);
+  assert.throws(() => V.decodePairing(V.encodePairing({ u: 'a', k: 'short' })), /incomplete/);
+  assert.throws(() => V.decodePairing(V.encodePairing({ u: 'a@b.c', k: 'k'.repeat(12), s: 'javascript:alert(1)' })), /invalid server/);
+});
+
+test('server: DELETE removes only the caller\'s blob', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'vfd-'));
+  const srv = createServer({ dataDir: dir }); await new Promise((r) => srv.listen(0, '127.0.0.1', r));
+  const base = 'http://127.0.0.1:' + srv.address().port;
+  const A = await C.deriveKeys('a@x.com', 'secret-number-one'), B = await C.deriveKeys('b@x.com', 'secret-number-two');
+  const put = async (k) => fetch(base + '/v1/blob', { method: 'PUT', body: await C.encrypt(k.key, { v: 1 }), headers: { Authorization: 'Bearer ' + k.token, 'If-None-Match': '*' } });
+  assert.equal((await put(A)).status, 200); assert.equal((await put(B)).status, 200);
+  assert.equal((await fetch(base + '/v1/blob', { method: 'DELETE', headers: { Authorization: 'Bearer ' + A.token } })).status, 200);
+  assert.equal((await fetch(base + '/v1/blob', { headers: { Authorization: 'Bearer ' + A.token } })).status, 404);
+  assert.equal((await fetch(base + '/v1/blob', { headers: { Authorization: 'Bearer ' + B.token } })).status, 200);
+  assert.equal((await fetch(base + '/v1/blob', { method: 'DELETE' })).status, 401);
   srv.closeAllConnections(); srv.close();
 });

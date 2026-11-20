@@ -29,6 +29,7 @@ const handlers = {
   remove: (m) => VFCore.removeLogin(m.id).then(scheduleSync),
   import: (m) => VFCore.importLogins(m.items).then((n) => { scheduleSync(); return n; }),
   export: () => VFCore.exportLogins(),
+  pairingPayload: (m) => VFCore.pairingPayload(m.secret),
   fill: (m) => fillTab(m.tabId, m.id),
   // from content scripts (tab id comes from the sender, never from the page)
   captured: (m, s) => VFCore.capture(s.tab.id, new URL(s.tab.url).hostname, m.username, m.password),

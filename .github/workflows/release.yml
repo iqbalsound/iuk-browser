@@ -1,0 +1,247 @@
+# Release pipeline: extension + DEB + RPM + Windows (setup.exe and portable zip), then a DRAFT GitHub Release.
+#
+#   git tag v1.1.0 && git push origin v1.1.0      -> builds everything and drafts the release
+#   Actions > Release > Run workflow              -> manual run (leave "tag" empty for artifacts only)
+#
+# Build modes
+#   bundle  (default)  Repackages the official Firefox ESR binaries with the IUK Browser layer and icons. Minutes.
+#                      Those binaries are Mozilla's, so they are NOT attached to the public release (only the
+#                      extension is); download them from the workflow run's artifacts for personal use.
+#   source             Compiles Gecko from source with IUK Browser branding (unofficial branding path), which may be
+#                      redistributed, so DEB/RPM/EXE ARE attached to the release. Hours; see runner notes below.
+# Set the default for tag pushes with the repository variable IUK_BUILD_MODE (bundle | source).
+#
+# Runners: source builds exceed what a standard hosted runner can do reliably (6 h limit, small disk).
+# Point them at larger runners with repository variables LINUX_RUNNER and WINDOWS_RUNNER (a self-hosted or
+# larger-hosted runner label). The Windows source build (MozillaBuild) is experimental.
+name: Release
+
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+*']
+  workflow_dispatch:
+    inputs:
+      build_mode:
+        description: "bundle = repackage official Firefox ESR (fast, private); source = compile IUK-branded Gecko (publishable, slow)"
+        type: choice
+        options: [bundle, source]
+        default: bundle
+      tag:
+        description: "Tag to draft a release for (blank = build artifacts only)"
+        required: false
+        default: ""
+      firefox_ref:
+        description: "Firefox ESR tag for source builds, e.g. FIREFOX_153_7_0esr_RELEASE (blank = latest ESR)"
+        required: false
+        default: ""
+      attach_binaries:
+        description: "bundle mode only: also attach the DEB/RPM/EXE (Mozilla-branded) to the draft release. Private repos / personal use only"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.m.outputs.version }}
+      tag: ${{ steps.m.outputs.tag }}
+      mode: ${{ steps.m.outputs.mode }}
+      firefox_ref: ${{ steps.m.outputs.firefox_ref }}
+      attach: ${{ steps.m.outputs.attach }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: m
+        shell: bash
+        env:
+          INPUT_MODE: ${{ inputs.build_mode }}
+          INPUT_TAG: ${{ inputs.tag }}
+          INPUT_REF: ${{ inputs.firefox_ref }}
+          VAR_MODE: ${{ vars.IUK_BUILD_MODE }}
+          INPUT_ATTACH: ${{ inputs.attach_binaries }}
+          VAR_ATTACH: ${{ vars.IUK_ATTACH_BUNDLES }}
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_REF_TYPE" = tag ]; then TAG="$GITHUB_REF_NAME"; else TAG="${INPUT_TAG:-}"; fi
+          MODE="${INPUT_MODE:-${VAR_MODE:-bundle}}"
+          case "$MODE" in bundle|source) ;; *) echo "::error::build mode must be bundle or source (got '$MODE')"; exit 1;; esac
+          MANIFEST="$(python3 -c "import json;print(json.load(open('extension/manifest.json'))['version'])")"
+          PKG="$(python3 -c "import json;print(json.load(open('package.json'))['version'])")"
+          [ "$MANIFEST" = "$PKG" ] || { echo "::error::extension/manifest.json ($MANIFEST) and package.json ($PKG) versions differ"; exit 1; }
+          VERSION="$MANIFEST"
+          if [ -n "$TAG" ] && [ "${TAG#v}" != "$VERSION" ]; then echo "::error::tag $TAG does not match version $VERSION"; exit 1; fi
+          grep -q "^## \[$VERSION\]" CHANGELOG.md || { echo "::error::CHANGELOG.md has no section for $VERSION"; exit 1; }
+          awk -v v="$VERSION" '/^## \[/{p=(index($0,"["v"]")>0); next} p' CHANGELOG.md > release-notes.md
+          REF=""
+          if [ "$MODE" = source ]; then REF="$(FIREFOX_REF="${INPUT_REF:-}" build/resolve-esr-tag.sh)"; fi
+          ATTACH=false
+          if [ "$MODE" = source ] || [ "${INPUT_ATTACH:-}" = true ] || [ "${VAR_ATTACH:-}" = true ]; then ATTACH=true; fi
+          { echo "version=$VERSION"; echo "tag=$TAG"; echo "mode=$MODE"; echo "firefox_ref=$REF"; echo "attach=$ATTACH"; } >> "$GITHUB_OUTPUT"
+          echo "Release $VERSION (tag='${TAG}', mode=$MODE, firefox='${REF}')"
+      - uses: actions/upload-artifact@v4
+        with: { name: release-notes, path: release-notes.md, retention-days: 30 }
+
+  test:
+    needs: meta
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install --no-audit --no-fund
+      - run: npm test
+      - run: npm run lint
+      - name: Build extension
+        env: { VERSION: "${{ needs.meta.outputs.version }}" }
+        run: |
+          npx web-ext build --source-dir extension --artifacts-dir dist --filename "iuk-browser-${VERSION}-extension.zip" --overwrite-dest
+          cp "dist/iuk-browser-${VERSION}-extension.zip" "dist/iuk-browser-${VERSION}.xpi"
+      - uses: actions/upload-artifact@v4
+        with: { name: extension, path: "dist/iuk-browser-*", retention-days: 30 }
+
+  linux:
+    needs: [meta, test]
+    runs-on: ${{ vars.LINUX_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - name: Free disk space (hosted runners)
+        if: ${{ needs.meta.outputs.mode == 'source' && !vars.LINUX_RUNNER }}
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL || true
+          df -h /
+      - name: Install nfpm
+        run: |
+          curl -fsSL -o nfpm.tgz https://github.com/goreleaser/nfpm/releases/download/v2.41.0/nfpm_2.41.0_Linux_x86_64.tar.gz
+          sudo tar -xzf nfpm.tgz -C /usr/local/bin nfpm
+      - name: Build DEB and RPM
+        env:
+          VERSION: ${{ needs.meta.outputs.version }}
+          MODE: ${{ needs.meta.outputs.mode }}
+          FIREFOX_REF: ${{ needs.meta.outputs.firefox_ref }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          if [ "$MODE" = source ]; then IUK_VERSION="$VERSION" build/build-source.sh
+          else packaging/build-bundle.sh linux "$VERSION"; fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-packages
+          path: |
+            dist/*.deb
+            dist/*.rpm
+          retention-days: 30
+
+  overlay:
+    # Branding is applied on Linux (needs Cairo) and handed to the Windows source build as a tarball.
+    needs: meta
+    if: ${{ needs.meta.outputs.mode == 'source' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - env: { FIREFOX_REF: "${{ needs.meta.outputs.firefox_ref }}" }
+        run: |
+          sudo apt-get update && sudo apt-get install -y libcairo2
+          build/make-branding-overlay.sh
+      - uses: actions/upload-artifact@v4
+        with: { name: branding-overlay, path: dist/branding-overlay.tar.gz, retention-days: 7 }
+
+  windows-build:
+    # EXPERIMENTAL: Gecko compile with MozillaBuild on a Windows runner (source mode only).
+    needs: [meta, overlay]
+    if: ${{ needs.meta.outputs.mode == 'source' }}
+    runs-on: ${{ vars.WINDOWS_RUNNER || 'windows-latest' }}
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { name: branding-overlay, path: overlay }
+      - name: Install MozillaBuild
+        shell: pwsh
+        run: |
+          Invoke-WebRequest https://ftp.mozilla.org/pub/mozilla/libraries/win32/MozillaBuildSetup-Latest.exe -OutFile mb.exe
+          Start-Process -Wait -FilePath .\mb.exe -ArgumentList '/S'
+      - name: Build Firefox (IUK Browser)
+        shell: pwsh
+        env: { FIREFOX_REF: "${{ needs.meta.outputs.firefox_ref }}" }
+        run: |
+          $ws = $env:GITHUB_WORKSPACE
+          $p = '/' + $ws.Substring(0,1).ToLower() + ($ws.Substring(2) -replace '\\','/')
+          & C:\mozilla-build\start-shell.bat -no-mintty -no-start-hg -c "cd $p && FIREFOX_REF=$env:FIREFOX_REF OVERLAY=$p/overlay/branding-overlay.tar.gz bash build/build-windows-source.sh"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - uses: actions/upload-artifact@v4
+        with: { name: windows-firefox-zip, path: "dist/firefox-*.win64.zip", retention-days: 7 }
+
+  windows:
+    needs: [meta, test, windows-build]
+    if: ${{ !cancelled() && needs.test.result == 'success' && (needs.windows-build.result == 'success' || needs.windows-build.result == 'skipped') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y nsis p7zip-full zip unzip
+      - uses: actions/download-artifact@v4
+        if: ${{ needs.meta.outputs.mode == 'source' }}
+        with: { name: windows-firefox-zip, path: windows-src }
+      - name: Build installer and portable zip
+        env:
+          VERSION: ${{ needs.meta.outputs.version }}
+          MODE: ${{ needs.meta.outputs.mode }}
+        run: |
+          if [ "$MODE" = source ]; then
+            SOURCE_BUILD=1 FIREFOX_ZIP="$(ls windows-src/firefox-*.win64.zip | head -1)" packaging/build-bundle.sh windows "$VERSION"
+          else
+            packaging/build-bundle.sh windows "$VERSION"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-packages
+          path: |
+            dist/iuk-browser-*-setup.exe
+            dist/iuk-browser-*-win64-portable.zip
+          retention-days: 30
+
+  release:
+    needs: [meta, test, linux, windows]
+    if: ${{ !cancelled() && needs.meta.outputs.tag != '' && needs.linux.result == 'success' && needs.windows.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { path: artifacts, merge-multiple: true }
+      - name: Draft the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.meta.outputs.tag }}
+          VERSION: ${{ needs.meta.outputs.version }}
+          MODE: ${{ needs.meta.outputs.mode }}
+          ATTACH: ${{ needs.meta.outputs.attach }}
+          FFREF: ${{ needs.meta.outputs.firefox_ref }}
+        run: |
+          set -euo pipefail
+          cd artifacts
+          FILES=("iuk-browser-${VERSION}-extension.zip" "iuk-browser-${VERSION}.xpi")
+          if [ "$ATTACH" = true ]; then
+            FILES+=(iuk-browser_*_amd64.deb iuk-browser-*.x86_64.rpm "iuk-browser-${VERSION}-setup.exe" "iuk-browser-${VERSION}-win64-portable.zip")
+          fi
+          if [ "$MODE" = source ]; then
+            { echo; echo "Built from Firefox ESR source (\`$FFREF\`) with IUK Browser branding."; } >> release-notes.md
+          elif [ "$ATTACH" = true ]; then
+            { echo; echo "> Personal-use packages: repackaged official Firefox ESR binaries (Mozilla-branded). Do not redistribute publicly."; } >> release-notes.md
+          else
+            { echo; echo "> DEB, RPM and Windows packages from this run are Mozilla-branded repackaged binaries and are not attached."
+              echo "> Build with \`IUK_BUILD_MODE=source\` for redistributable packages."; } >> release-notes.md
+          fi
+          sha256sum "${FILES[@]}" > SHA256SUMS
+          FILES+=(SHA256SUMS)
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "${FILES[@]}" --clobber
+            gh release edit "$TAG" --notes-file release-notes.md
+          else
+            gh release create "$TAG" "${FILES[@]}" --draft --title "IUK Browser ${VERSION}" --notes-file release-notes.md --target "$GITHUB_SHA"
+          fi
+          echo "Draft release created for $TAG. Review it on GitHub and publish." >> "$GITHUB_STEP_SUMMARY"
