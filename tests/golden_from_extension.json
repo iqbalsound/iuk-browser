@@ -1,0 +1,40 @@
+{
+ "user": "me@x.com",
+ "secret": "correct horse battery staple",
+ "token": "5f0dac10d64f3e189dcb1df547cd32ddd7bcc834d51ae789cffac5f7eb21be0b",
+ "doc": {
+  "v": 1,
+  "bookmarks": {
+   "https://a.example/": {
+    "url": "https://a.example/",
+    "title": "Ä",
+    "root": "toolbar",
+    "path": [
+     "News"
+    ],
+    "updatedAt": 5,
+    "deleted": false
+   }
+  },
+  "logins": {
+   "a.com|me": {
+    "id": "a.com|me",
+    "host": "a.com",
+    "username": "me",
+    "password": "pw-ü",
+    "notes": "",
+    "createdAt": 1,
+    "updatedAt": 2,
+    "deleted": false
+   }
+  },
+  "kdf": "argon2id-v2"
+ },
+ "blob": "v1.ie+7z8PYik4M5Vsz.e8AIqQugYzpmumKGk+QvmTU8QVo98C1q/BZX9eGmrZJleIqEYsfx/zBIymNut4CuLFnk/gvURwLZhB2K+rkj96ghVk5a7Ds9kT6Nhu8EMAPNcnc2/mV8g7QJcOGtwh1aAfqRi4lPB9Ivyw56+g0WWhRGAUFZ0IoCi+XoIUOo+HKy4X7885A9Mfq0Cp8qTnhFiUKbWPmQlNTDEAOJ92IGzBYKfHcdP33x0D2fb5l3xhD5TQfUemS/1GNnMK/bq1ZdRdLEZYpGoV3HeAhrPO5wCSg1e4acyh8fsMPRRylEEnfJhn8j6CAFE+oEprZQsU0zWHWj2ls65Rmt0uP2MOQQohDkTqqjPvykcjMPs4Olt9ueAUbf3rbhndWft8+FR1qgqLMVLMeKt+leag9KbqflV+Q+UVRe7ADjbU6mLqRod8ZSJYiOLC3fQQ==",
+ "pairing_input": {
+  "u": "me@x.com",
+  "k": "abcdefghijklmnopqrstuvwxyz123456",
+  "s": "https://sync.example.com"
+ },
+ "pairing_code": "IUKB1:eyJ1IjoibWVAeC5jb20iLCJrIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTYiLCJzIjoiaHR0cHM6Ly9zeW5jLmV4YW1wbGUuY29tIn0"
+}

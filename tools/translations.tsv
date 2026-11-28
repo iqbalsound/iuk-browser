@@ -1,0 +1,256 @@
+# English | ur | ar | fr | es | de | zh_CN      (placeholders {} must be kept, in any order-compatible position)
+(no sync server in the code) | (کوڈ میں کوئی ہم آہنگی سرور نہیں) | (لا يوجد خادم مزامنة في الرمز) | (aucun serveur de synchronisation dans le code) | (sin servidor de sincronización en el código) | (kein Sync-Server im Code) | （代码中没有同步服务器）
+(no user name) | (کوئی صارف نام نہیں) | (بدون اسم مستخدم) | (sans nom d'utilisateur) | (sin nombre de usuario) | (kein Benutzername) | （无用户名）
+A second factor is ON. New devices and new sessions must enter an authenticator code. | دوسرا عنصر فعال ہے۔ نئے آلات اور نئے سیشنز کو تصدیقی کوڈ درج کرنا ہوگا۔ | العامل الثاني مفعّل. يجب على الأجهزة والجلسات الجديدة إدخال رمز المصادقة. | Un second facteur est activé. Les nouveaux appareils et sessions doivent saisir un code d'authentification. | El segundo factor está activado. Los dispositivos y sesiones nuevos deben introducir un código del autenticador. | Ein zweiter Faktor ist aktiv. Neue Geräte und Sitzungen müssen einen Authenticator-Code eingeben. | 已启用第二验证因素。新设备和新会话必须输入验证器代码。
+About IUK Browser | IUK براؤزر کے بارے میں | حول متصفح IUK | À propos d'IUK Browser | Acerca de IUK Browser | Über IUK Browser | 关于 IUK 浏览器
+Accent | نمایاں رنگ | لون التمييز | Accent | Acento | Akzent | 强调色
+Address | پتہ | العنوان | Adresse | Dirección | Adresse | 地址
+Add… | شامل کریں… | إضافة… | Ajouter… | Añadir… | Hinzufügen… | 添加…
+All bookmarks | تمام بک مارکس | كل الإشارات المرجعية | Tous les marque-pages | Todos los marcadores | Alle Lesezeichen | 所有书签
+Appearance | ظاہری شکل | المظهر | Apparence | Apariencia | Erscheinungsbild | 外观
+Ask web pages for a dark appearance (Chromium) | ویب صفحات سے گہری ظاہری شکل مانگیں (Chromium) | اطلب مظهرًا داكنًا من صفحات الويب (Chromium) | Demander un thème sombre aux pages web (Chromium) | Pedir un aspecto oscuro a las páginas web (Chromium) | Webseiten ein dunkles Erscheinungsbild anfordern (Chromium) | 请求网页使用深色外观（Chromium）
+Authenticator code or recovery code | تصدیقی کوڈ یا بازیابی کوڈ | رمز المصادقة أو رمز الاسترداد | Code d'authentification ou de récupération | Código del autenticador o de recuperación | Authenticator- oder Wiederherstellungscode | 验证器代码或恢复代码
+Automatic | خودکار | تلقائي | Automatique | Automático | Automatisch | 自动
+Back | پیچھے | رجوع | Précédent | Atrás | Zurück | 后退
+Background | پس منظر | الخلفية | Arrière-plan | Fondo | Hintergrund | 背景
+Bookmark | بک مارک | إشارة مرجعية | Marque-page | Marcador | Lesezeichen | 书签
+Bookmark this page | اس صفحے کو بک مارک کریں | إضافة هذه الصفحة إلى الإشارات | Ajouter cette page aux marque-pages | Añadir esta página a marcadores | Lesezeichen für diese Seite | 收藏此页面
+Bookmarks | بک مارکس | الإشارات المرجعية | Marque-pages | Marcadores | Lesezeichen | 书签
+Bookmarks menu | بک مارکس مینو | قائمة الإشارات | Menu des marque-pages | Menú de marcadores | Lesezeichen-Menü | 书签菜单
+Bookmarks toolbar | بک مارکس ٹول بار | شريط الإشارات | Barre personnelle | Barra de marcadores | Lesezeichen-Symbolleiste | 书签工具栏
+Brightness | روشنی | السطوع | Luminosité | Brillo | Helligkeit | 亮度
+Browser theme | براؤزر تھیم | سمة المتصفح | Thème du navigateur | Tema del navegador | Browser-Design | 浏览器主题
+Camera not available. Choose an image or paste the code instead. | کیمرا دستیاب نہیں۔ اس کے بجائے تصویر منتخب کریں یا کوڈ پیسٹ کریں۔ | الكاميرا غير متاحة. اختر صورة أو الصق الرمز بدلًا من ذلك. | Caméra indisponible. Choisissez une image ou collez le code. | Cámara no disponible. Elija una imagen o pegue el código. | Kamera nicht verfügbar. Wählen Sie ein Bild oder fügen Sie den Code ein. | 摄像头不可用。请选择图片或粘贴代码。
+Cancel | منسوخ کریں | إلغاء | Annuler | Cancelar | Abbrechen | 取消
+Check for updates | اپ ڈیٹس چیک کریں | التحقق من التحديثات | Rechercher des mises à jour | Buscar actualizaciones | Nach Updates suchen | 检查更新
+Check for updates automatically | اپ ڈیٹس خود بخود چیک کریں | التحقق من التحديثات تلقائيًا | Rechercher les mises à jour automatiquement | Buscar actualizaciones automáticamente | Automatisch nach Updates suchen | 自动检查更新
+Check now | ابھی چیک کریں | تحقق الآن | Vérifier maintenant | Comprobar ahora | Jetzt prüfen | 立即检查
+Checking key (takes a moment)… | کلید کی جانچ ہو رہی ہے (کچھ لمحے لگیں گے)… | جارٍ فحص المفتاح (يستغرق لحظة)… | Vérification de la clé (un instant)… | Comprobando la clave (tarda un momento)… | Schlüssel wird geprüft (dauert einen Moment)… | 正在检查密钥（需要片刻）…
+Checking… | جانچ ہو رہی ہے… | جارٍ الفحص… | Vérification… | Comprobando… | Prüfung… | 正在检查…
+Choose a login | لاگ ان منتخب کریں | اختر تسجيل دخول | Choisissez un identifiant | Elija un inicio de sesión | Zugangsdaten wählen | 选择登录信息
+Choose image… | تصویر منتخب کریں… | اختر صورة… | Choisir une image… | Elegir imagen… | Bild wählen… | 选择图片…
+Clear copied passwords after | کاپی کیے گئے پاس ورڈ صاف کریں بعد از | مسح كلمات المرور المنسوخة بعد | Effacer les mots de passe copiés après | Borrar contraseñas copiadas después de | Kopierte Passwörter löschen nach | 复制的密码清除时间
+Clear history | تاریخ صاف کریں | مسح السجل | Effacer l'historique | Borrar historial | Verlauf löschen | 清除历史记录
+Close | بند کریں | إغلاق | Fermer | Cerrar | Schließen | 关闭
+Close tab | ٹیب بند کریں | إغلاق التبويب | Fermer l'onglet | Cerrar pestaña | Tab schließen | 关闭标签页
+Color invert and page filters | رنگ الٹنا اور صفحہ فلٹرز | عكس الألوان ومرشحات الصفحة | Inversion des couleurs et filtres de page | Inversión de color y filtros de página | Farbumkehr und Seitenfilter | 颜色反转和页面滤镜
+Confirm | تصدیق کریں | تأكيد | Confirmer | Confirmar | Bestätigen | 确认
+Contrast | تضاد | التباين | Contraste | Contraste | Kontrast | 对比度
+Copy | کاپی کریں | نسخ | Copier | Copiar | Kopieren | 复制
+Copy code instead | اس کے بجائے کوڈ کاپی کریں | انسخ الرمز بدلًا من ذلك | Copier plutôt le code | Copiar el código en su lugar | Stattdessen Code kopieren | 改为复制代码
+Copy password | پاس ورڈ کاپی کریں | نسخ كلمة المرور | Copier le mot de passe | Copiar contraseña | Passwort kopieren | 复制密码
+Copy user name | صارف نام کاپی کریں | نسخ اسم المستخدم | Copier le nom d'utilisateur | Copiar nombre de usuario | Benutzernamen kopieren | 复制用户名
+Create vault | والٹ بنائیں | إنشاء الخزنة | Créer le coffre | Crear caja fuerte | Tresor erstellen | 创建保险库
+Custom | حسبِ ضرورت | مخصص | Personnalisé | Personalizado | Benutzerdefiniert | 自定义
+Dark | گہرا | داكن | Sombre | Oscuro | Dunkel | 深色
+Delete | حذف کریں | حذف | Supprimer | Eliminar | Löschen | 删除
+Delete folder | فولڈر حذف کریں | حذف المجلد | Supprimer le dossier | Eliminar carpeta | Ordner löschen | 删除文件夹
+Delete this folder and everything in it? | یہ فولڈر اور اس کا سارا مواد حذف کریں؟ | حذف هذا المجلد وكل ما فيه؟ | Supprimer ce dossier et tout son contenu ? | ¿Eliminar esta carpeta y todo su contenido? | Diesen Ordner samt Inhalt löschen? | 删除此文件夹及其所有内容？
+Delete this login? | یہ لاگ ان حذف کریں؟ | حذف تسجيل الدخول هذا؟ | Supprimer cet identifiant ? | ¿Eliminar este inicio de sesión? | Diese Zugangsdaten löschen? | 删除此登录信息？
+Deriving key (takes a moment)… | کلید تیار ہو رہی ہے (کچھ لمحے لگیں گے)… | جارٍ اشتقاق المفتاح (يستغرق لحظة)… | Dérivation de la clé (un instant)… | Derivando la clave (tarda un momento)… | Schlüssel wird abgeleitet (dauert einen Moment)… | 正在派生密钥（需要片刻）…
+Developer tools | ڈیولپر ٹولز | أدوات المطوّر | Outils de développement | Herramientas de desarrollo | Entwicklerwerkzeuge | 开发者工具
+Downloading update… | اپ ڈیٹ ڈاؤن لوڈ ہو رہی ہے… | جارٍ تنزيل التحديث… | Téléchargement de la mise à jour… | Descargando la actualización… | Update wird heruntergeladen… | 正在下载更新…
+Downloads | ڈاؤن لوڈز | التنزيلات | Téléchargements | Descargas | Downloads | 下载
+Edit bookmark | بک مارک میں ترمیم کریں | تعديل الإشارة المرجعية | Modifier le marque-page | Editar marcador | Lesezeichen bearbeiten | 编辑书签
+Edit… | ترمیم کریں… | تعديل… | Modifier… | Editar… | Bearbeiten… | 编辑…
+Encrypted bookmark and password sync, built on Qt WebEngine. | خفیہ شدہ بک مارک اور پاس ورڈ ہم آہنگی، Qt WebEngine پر مبنی۔ | مزامنة مشفّرة للإشارات وكلمات المرور، مبنية على Qt WebEngine. | Synchronisation chiffrée des marque-pages et mots de passe, basée sur Qt WebEngine. | Sincronización cifrada de marcadores y contraseñas, basada en Qt WebEngine. | Verschlüsselte Synchronisierung von Lesezeichen und Passwörtern auf Basis von Qt WebEngine. | 基于 Qt WebEngine 的加密书签与密码同步。
+Existing tags: {} | موجودہ ٹیگز: {} | الوسوم الحالية: {} | Étiquettes existantes : {} | Etiquetas existentes: {} | Vorhandene Tags: {} | 现有标签：{}
+Export CSV… | CSV برآمد کریں… | تصدير CSV… | Exporter en CSV… | Exportar CSV… | CSV exportieren… | 导出 CSV…
+Export HTML… | HTML برآمد کریں… | تصدير HTML… | Exporter en HTML… | Exportar HTML… | HTML exportieren… | 导出 HTML…
+Fill login on this page | اس صفحے پر لاگ ان بھریں | ملء بيانات الدخول في هذه الصفحة | Remplir l'identifiant sur cette page | Rellenar inicio de sesión en esta página | Zugangsdaten auf dieser Seite ausfüllen | 在此页面填写登录信息
+Find in page | صفحے میں تلاش کریں | بحث في الصفحة | Rechercher dans la page | Buscar en la página | In Seite suchen | 在页面中查找
+Focus address bar | ایڈریس بار پر جائیں | التركيز على شريط العنوان | Aller à la barre d'adresse | Ir a la barra de direcciones | Adressleiste fokussieren | 定位到地址栏
+Folder | فولڈر | مجلد | Dossier | Carpeta | Ordner | 文件夹
+Folder name | فولڈر کا نام | اسم المجلد | Nom du dossier | Nombre de la carpeta | Ordnername | 文件夹名称
+Follow the system | سسٹم کے مطابق | اتباع النظام | Suivre le système | Seguir el sistema | Systemeinstellung folgen | 跟随系统
+Forget this device… | اس آلے کو بھول جائیں… | نسيان هذا الجهاز… | Oublier cet appareil… | Olvidar este dispositivo… | Dieses Gerät entfernen… | 忘记此设备…
+Forward | آگے | تقدّم | Suivant | Adelante | Vor | 前进
+Full screen | مکمل اسکرین | ملء الشاشة | Plein écran | Pantalla completa | Vollbild | 全屏
+General | عمومی | عام | Général | General | Allgemein | 常规
+Generate | بنائیں | توليد | Générer | Generar | Erzeugen | 生成
+Generate key | کلید بنائیں | توليد مفتاح | Générer une clé | Generar clave | Schlüssel erzeugen | 生成密钥
+Generate password… | پاس ورڈ بنائیں… | توليد كلمة مرور… | Générer un mot de passe… | Generar contraseña… | Passwort erzeugen… | 生成密码…
+Hides in {} s | {} سیکنڈ میں چھپ جائے گا | سيختفي خلال {} ث | Se masque dans {} s | Se oculta en {} s | Wird in {} s ausgeblendet | {} 秒后隐藏
+High contrast | زیادہ تضاد | تباين عالٍ | Contraste élevé | Alto contraste | Hoher Kontrast | 高对比度
+History | تاریخ | السجل | Historique | Historial | Verlauf | 历史记录
+Home | ہوم | الرئيسية | Accueil | Inicio | Startseite | 主页
+Home page | ہوم پیج | الصفحة الرئيسية | Page d'accueil | Página de inicio | Startseite | 主页
+IUK Browser | IUK براؤزر | متصفح IUK | IUK Browser | IUK Browser | IUK Browser | IUK 浏览器
+If you installed from the apt or dnf repository, update with your package manager. | اگر آپ نے apt یا dnf ریپوزٹری سے انسٹال کیا ہے تو اپنے پیکیج مینیجر سے اپ ڈیٹ کریں۔ | إذا ثبّتّه من مستودع apt أو dnf فحدّثه بمدير الحزم لديك. | Si vous l'avez installé depuis le dépôt apt ou dnf, mettez à jour avec votre gestionnaire de paquets. | Si lo instaló desde el repositorio apt o dnf, actualice con su gestor de paquetes. | Wenn Sie es über das apt- oder dnf-Repository installiert haben, aktualisieren Sie mit Ihrem Paketmanager. | 如果您通过 apt 或 dnf 软件源安装，请使用包管理器更新。
+Import CSV… | CSV درآمد کریں… | استيراد CSV… | Importer un CSV… | Importar CSV… | CSV importieren… | 导入 CSV…
+Import HTML… | HTML درآمد کریں… | استيراد HTML… | Importer un HTML… | Importar HTML… | HTML importieren… | 导入 HTML…
+Imported {} bookmarks. | {} بک مارکس درآمد ہو گئے۔ | تم استيراد {} إشارة مرجعية. | {} marque-pages importés. | Se importaron {} marcadores. | {} Lesezeichen importiert. | 已导入 {} 个书签。
+Imported {} logins. Delete the CSV file now: it holds plain-text passwords. | {} لاگ ان درآمد ہو گئے۔ اب CSV فائل حذف کر دیں: اس میں سادہ متن پاس ورڈ ہیں۔ | تم استيراد {} تسجيل دخول. احذف ملف CSV الآن: فهو يحوي كلمات مرور نصية. | {} identifiants importés. Supprimez maintenant le fichier CSV : il contient des mots de passe en clair. | Se importaron {} inicios de sesión. Elimine ahora el archivo CSV: contiene contraseñas en texto plano. | {} Zugangsdaten importiert. Löschen Sie die CSV-Datei jetzt: Sie enthält Passwörter im Klartext. | 已导入 {} 个登录信息。请立即删除 CSV 文件：其中包含明文密码。
+Install and restart | انسٹال کریں اور دوبارہ شروع کریں | تثبيت وإعادة التشغيل | Installer et redémarrer | Instalar y reiniciar | Installieren und neu starten | 安装并重启
+Invert page colors (all sites) | صفحات کے رنگ الٹیں (تمام سائٹس) | عكس ألوان الصفحات (كل المواقع) | Inverser les couleurs des pages (tous les sites) | Invertir colores de página (todos los sitios) | Seitenfarben umkehren (alle Seiten) | 反转页面颜色（所有网站）
+Join account {} on {}? | اکاؤنٹ {} میں {} پر شامل ہوں؟ | الانضمام إلى الحساب {} على {}؟ | Rejoindre le compte {} sur {} ? | ¿Unirse a la cuenta {} en {}? | Dem Konto {} auf {} beitreten? | 加入 {}（服务器 {}）的账户？
+Join this account | اس اکاؤنٹ میں شامل ہوں | الانضمام إلى هذا الحساب | Rejoindre ce compte | Unirse a esta cuenta | Diesem Konto beitreten | 加入此账户
+Keep images and video natural when inverted | الٹنے پر تصاویر اور ویڈیو قدرتی رکھیں | إبقاء الصور والفيديو طبيعية عند العكس | Garder images et vidéos naturelles lors de l'inversion | Mantener imágenes y vídeo naturales al invertir | Bilder und Videos bei Umkehr unverändert lassen | 反转时保持图片和视频原色
+Language | زبان | اللغة | Langue | Idioma | Sprache | 语言
+Language changes apply after a restart. | زبان کی تبدیلی دوبارہ شروع کرنے کے بعد لاگو ہوگی۔ | يسري تغيير اللغة بعد إعادة التشغيل. | Le changement de langue s'applique après un redémarrage. | El cambio de idioma se aplica tras reiniciar. | Die Sprachänderung gilt nach einem Neustart. | 语言更改将在重启后生效。
+Later | بعد میں | لاحقًا | Plus tard | Más tarde | Später | 稍后
+Light | روشن | فاتح | Clair | Claro | Hell | 浅色
+Lock passwords | پاس ورڈز مقفل کریں | قفل كلمات المرور | Verrouiller les mots de passe | Bloquear contraseñas | Passwörter sperren | 锁定密码
+Login | لاگ ان | تسجيل الدخول | Identifiant | Inicio de sesión | Zugangsdaten | 登录信息
+Manage bookmarks… | بک مارکس کا نظم کریں… | إدارة الإشارات المرجعية… | Gérer les marque-pages… | Administrar marcadores… | Lesezeichen verwalten… | 管理书签…
+Menu | مینو | القائمة | Menu | Menú | Menü | 菜单
+Midnight | آدھی رات | منتصف الليل | Minuit | Medianoche | Mitternacht | 午夜
+Name | نام | الاسم | Nom | Nombre | Name | 名称
+Navigation | نیویگیشن | التنقل | Navigation | Navegación | Navigation | 导航
+Never | کبھی نہیں | أبدًا | Jamais | Nunca | Nie | 从不
+New folder… | نیا فولڈر… | مجلد جديد… | Nouveau dossier… | Nueva carpeta… | Neuer Ordner… | 新建文件夹…
+New private window | نئی نجی ونڈو | نافذة خاصة جديدة | Nouvelle fenêtre privée | Nueva ventana privada | Neues privates Fenster | 新建隐私窗口
+New tab | نیا ٹیب | تبويب جديد | Nouvel onglet | Nueva pestaña | Neuer Tab | 新建标签页
+New window | نئی ونڈو | نافذة جديدة | Nouvelle fenêtre | Nueva ventana | Neues Fenster | 新建窗口
+Next | اگلا | التالي | Suivant | Siguiente | Weiter | 下一个
+Next tab | اگلا ٹیب | التبويب التالي | Onglet suivant | Pestaña siguiente | Nächster Tab | 下一个标签页
+No QR code found in that image. | اس تصویر میں کوئی QR کوڈ نہیں ملا۔ | لم يُعثر على رمز QR في تلك الصورة. | Aucun code QR trouvé dans cette image. | No se encontró ningún código QR en esa imagen. | In diesem Bild wurde kein QR-Code gefunden. | 在该图片中未找到二维码。
+No saved logins for {} | {} کے لیے کوئی محفوظ لاگ ان نہیں | لا توجد بيانات دخول محفوظة لـ {} | Aucun identifiant enregistré pour {} | No hay inicios de sesión guardados para {} | Keine gespeicherten Zugangsdaten für {} | {} 没有已保存的登录信息
+Nord | نورڈ | نورد | Nord | Nord | Nord | Nord
+Not found | نہیں ملا | غير موجود | Introuvable | No encontrado | Nicht gefunden | 未找到
+Not now | ابھی نہیں | ليس الآن | Pas maintenant | Ahora no | Nicht jetzt | 暂不
+Notes | نوٹس | ملاحظات | Notes | Notas | Notizen | 备注
+OK | ٹھیک ہے | موافق | OK | Aceptar | OK | 确定
+Off | بند | إيقاف | Désactivé | Desactivado | Aus | 关闭
+On all sites | تمام سائٹس پر | على كل المواقع | Sur tous les sites | En todos los sitios | Auf allen Seiten | 所有网站
+Only on the sites listed below | صرف نیچے درج سائٹس پر | فقط على المواقع المدرجة أدناه | Uniquement sur les sites listés ci-dessous | Solo en los sitios de la lista | Nur auf den unten aufgeführten Seiten | 仅限下方列出的网站
+Open | کھولیں | فتح | Ouvrir | Abrir | Öffnen | 打开
+Open download page | ڈاؤن لوڈ صفحہ کھولیں | فتح صفحة التنزيل | Ouvrir la page de téléchargement | Abrir la página de descarga | Download-Seite öffnen | 打开下载页面
+Other bookmarks | دیگر بک مارکس | إشارات مرجعية أخرى | Autres marque-pages | Otros marcadores | Weitere Lesezeichen | 其他书签
+Pair another device (QR)… | دوسرا آلہ جوڑیں (QR)… | اقتران جهاز آخر (QR)… | Associer un autre appareil (QR)… | Emparejar otro dispositivo (QR)… | Weiteres Gerät koppeln (QR)… | 配对另一台设备（二维码）…
+Pair devices | آلات جوڑیں | اقتران الأجهزة | Associer des appareils | Emparejar dispositivos | Geräte koppeln | 配对设备
+Pairing code copied. Treat it like your key. | جوڑنے کا کوڈ کاپی ہو گیا۔ اسے اپنی کلید کی طرح محفوظ رکھیں۔ | تم نسخ رمز الاقتران. تعامل معه كمفتاحك. | Code d'appairage copié. Traitez-le comme votre clé. | Código de emparejamiento copiado. Trátelo como su clave. | Kopplungscode kopiert. Behandeln Sie ihn wie Ihren Schlüssel. | 配对代码已复制。请像对待密钥一样保管。
+Password | پاس ورڈ | كلمة المرور | Mot de passe | Contraseña | Passwort | 密码
+Password copied. | پاس ورڈ کاپی ہو گیا۔ | تم نسخ كلمة المرور. | Mot de passe copié. | Contraseña copiada. | Passwort kopiert. | 密码已复制。
+Password copied. The clipboard is cleared in {} s. | پاس ورڈ کاپی ہو گیا۔ کلپ بورڈ {} سیکنڈ میں صاف ہو جائے گا۔ | تم نسخ كلمة المرور. سيُمسح الحافظة خلال {} ث. | Mot de passe copié. Le presse-papiers sera vidé dans {} s. | Contraseña copiada. El portapapeles se borrará en {} s. | Passwort kopiert. Die Zwischenablage wird in {} s geleert. | 密码已复制。剪贴板将在 {} 秒后清除。
+Passwords | پاس ورڈز | كلمات المرور | Mots de passe | Contraseñas | Passwörter | 密码
+Point the camera at the QR code… | کیمرا QR کوڈ کی طرف کریں… | وجّه الكاميرا نحو رمز QR… | Pointez la caméra vers le code QR… | Apunte la cámara al código QR… | Richten Sie die Kamera auf den QR-Code… | 请将摄像头对准二维码…
+Previous | پچھلا | السابق | Précédent | Anterior | Zurück | 上一个
+Previous tab | پچھلا ٹیب | التبويب السابق | Onglet précédent | Pestaña anterior | Vorheriger Tab | 上一个标签页
+Print to PDF… | PDF میں پرنٹ کریں… | طباعة إلى PDF… | Imprimer en PDF… | Imprimir en PDF… | Als PDF drucken… | 打印为 PDF…
+Private | نجی | خاص | Privé | Privada | Privat | 隐私
+Protect your sync account with an authenticator app. Even if your sync token leaks, nobody can download your encrypted data without a code. | اپنے ہم آہنگی اکاؤنٹ کو تصدیقی ایپ سے محفوظ بنائیں۔ ٹوکن لیک ہو جائے تب بھی کوڈ کے بغیر کوئی آپ کا خفیہ ڈیٹا ڈاؤن لوڈ نہیں کر سکتا۔ | احمِ حساب المزامنة بتطبيق مصادقة. حتى لو تسرّب رمز المزامنة فلن يستطيع أحد تنزيل بياناتك المشفّرة دون رمز. | Protégez votre compte de synchronisation avec une application d'authentification. Même si votre jeton fuite, personne ne peut télécharger vos données chiffrées sans code. | Proteja su cuenta de sincronización con una app de autenticación. Aunque se filtre su token, nadie podrá descargar sus datos cifrados sin un código. | Schützen Sie Ihr Sync-Konto mit einer Authenticator-App. Selbst wenn Ihr Token geleakt wird, kann niemand Ihre verschlüsselten Daten ohne Code herunterladen. | 使用验证器应用保护您的同步账户。即使同步令牌泄露，没有验证码也无法下载您的加密数据。
+QR hidden. | QR چھپا دیا گیا۔ | تم إخفاء رمز QR. | QR masqué. | QR oculto. | QR-Code ausgeblendet. | 二维码已隐藏。
+Recovered items | بازیاب شدہ اشیا | عناصر مستعادة | Éléments récupérés | Elementos recuperados | Wiederhergestellte Elemente | 已恢复项目
+Reload | دوبارہ لوڈ کریں | إعادة تحميل | Actualiser | Recargar | Neu laden | 刷新
+Remove the local vault from this device? Data already on the sync server is untouched. | اس آلے سے مقامی والٹ ہٹائیں؟ ہم آہنگی سرور پر موجود ڈیٹا متاثر نہیں ہوگا۔ | إزالة الخزنة المحلية من هذا الجهاز؟ البيانات الموجودة على خادم المزامنة لن تتأثر. | Supprimer le coffre local de cet appareil ? Les données déjà sur le serveur ne sont pas touchées. | ¿Quitar la caja fuerte local de este dispositivo? Los datos del servidor de sincronización no se tocan. | Lokalen Tresor von diesem Gerät entfernen? Daten auf dem Sync-Server bleiben unberührt. | 从此设备移除本地保险库？同步服务器上的数据不受影响。
+Remove this bookmark? | یہ بک مارک ہٹائیں؟ | إزالة هذه الإشارة المرجعية؟ | Supprimer ce marque-page ? | ¿Quitar este marcador? | Dieses Lesezeichen entfernen? | 移除此书签？
+Rename folder… | فولڈر کا نام بدلیں… | إعادة تسمية المجلد… | Renommer le dossier… | Renombrar carpeta… | Ordner umbenennen… | 重命名文件夹…
+Reopen my tabs when the browser starts | براؤزر شروع ہونے پر میرے ٹیبز دوبارہ کھولیں | إعادة فتح تبويباتي عند بدء المتصفح | Rouvrir mes onglets au démarrage du navigateur | Reabrir mis pestañas al iniciar el navegador | Meine Tabs beim Start wieder öffnen | 启动浏览器时重新打开我的标签页
+Reset zoom | زوم بحال کریں | إعادة ضبط التكبير | Réinitialiser le zoom | Restablecer zoom | Zoom zurücksetzen | 重置缩放
+Save | محفوظ کریں | حفظ | Enregistrer | Guardar | Speichern | 保存
+Save as | بطور محفوظ کریں | حفظ باسم | Enregistrer sous | Guardar como | Speichern unter | 另存为
+Save the password for {} on {}? | {} کا پاس ورڈ {} پر محفوظ کریں؟ | حفظ كلمة المرور لـ {} على {}؟ | Enregistrer le mot de passe de {} sur {} ? | ¿Guardar la contraseña de {} en {}? | Passwort für {} auf {} speichern? | 保存 {} 在 {} 的密码？
+Save the password for {} on {}? Set up the password manager first. | {} کا پاس ورڈ {} پر محفوظ کریں؟ پہلے پاس ورڈ مینیجر سیٹ اپ کریں۔ | حفظ كلمة المرور لـ {} على {}؟ أعدّ مدير كلمات المرور أولًا. | Enregistrer le mot de passe de {} sur {} ? Configurez d'abord le gestionnaire de mots de passe. | ¿Guardar la contraseña de {} en {}? Configure primero el gestor de contraseñas. | Passwort für {} auf {} speichern? Richten Sie zuerst den Passwortmanager ein. | 保存 {} 在 {} 的密码？请先设置密码管理器。
+Saved passwords | محفوظ شدہ پاس ورڈز | كلمات المرور المحفوظة | Mots de passe enregistrés | Contraseñas guardadas | Gespeicherte Passwörter | 已保存的密码
+Saved passwords… | محفوظ شدہ پاس ورڈز… | كلمات المرور المحفوظة… | Mots de passe enregistrés… | Contraseñas guardadas… | Gespeicherte Passwörter… | 已保存的密码…
+Scan QR (new device) | QR اسکین کریں (نیا آلہ) | مسح QR (جهاز جديد) | Scanner le QR (nouvel appareil) | Escanear QR (dispositivo nuevo) | QR scannen (neues Gerät) | 扫描二维码（新设备）
+Scan pairing QR from another device… | دوسرے آلے سے جوڑنے کا QR اسکین کریں… | مسح رمز اقتران QR من جهاز آخر… | Scanner le QR d'appairage d'un autre appareil… | Escanear el QR de emparejamiento de otro dispositivo… | Kopplungs-QR eines anderen Geräts scannen… | 扫描另一台设备的配对二维码…
+Scan this QR with your authenticator app (or type the secret), then enter the 6-digit code. | یہ QR اپنی تصدیقی ایپ سے اسکین کریں (یا خفیہ کلید ٹائپ کریں)، پھر 6 ہندسوں کا کوڈ درج کریں۔ | امسح رمز QR هذا بتطبيق المصادقة (أو اكتب السر)، ثم أدخل الرمز المكوّن من 6 أرقام. | Scannez ce QR avec votre application d'authentification (ou saisissez le secret), puis entrez le code à 6 chiffres. | Escanee este QR con su app de autenticación (o escriba el secreto) e introduzca el código de 6 dígitos. | Scannen Sie diesen QR-Code mit Ihrer Authenticator-App (oder tippen Sie das Geheimnis ein) und geben Sie den 6-stelligen Code ein. | 用验证器应用扫描此二维码（或手动输入密钥），然后输入 6 位验证码。
+Search | تلاش | بحث | Rechercher | Buscar | Suchen | 搜索
+Search engine | سرچ انجن | محرك البحث | Moteur de recherche | Motor de búsqueda | Suchmaschine | 搜索引擎
+Search or enter address | تلاش کریں یا پتہ درج کریں | ابحث أو أدخل عنوانًا | Rechercher ou saisir une adresse | Buscar o introducir dirección | Suchen oder Adresse eingeben | 搜索或输入网址
+Second factor for the sync relay | ہم آہنگی ریلے کے لیے دوسرا عنصر | العامل الثاني لخادم المزامنة | Second facteur pour le relais de synchronisation | Segundo factor para el relé de sincronización | Zweiter Faktor für das Sync-Relay | 同步中继的第二验证因素
+Second factor for the sync relay… | ہم آہنگی ریلے کے لیے دوسرا عنصر… | العامل الثاني لخادم المزامنة… | Second facteur pour le relais de synchronisation… | Segundo factor para el relé de sincronización… | Zweiter Faktor für das Sync-Relay… | 同步中继的第二验证因素…
+Second factor is ON. Save these recovery codes somewhere safe: each works once if you lose your phone. | دوسرا عنصر فعال ہو گیا۔ یہ بازیابی کوڈ محفوظ جگہ رکھیں: فون کھو جائے تو ہر کوڈ ایک بار کام کرے گا۔ | العامل الثاني مفعّل. احفظ رموز الاسترداد هذه في مكان آمن: يعمل كل رمز مرة واحدة إذا فقدت هاتفك. | Le second facteur est activé. Conservez ces codes de récupération en lieu sûr : chacun sert une fois si vous perdez votre téléphone. | El segundo factor está activado. Guarde estos códigos de recuperación en un lugar seguro: cada uno sirve una vez si pierde el teléfono. | Der zweite Faktor ist aktiv. Bewahren Sie diese Wiederherstellungscodes sicher auf: Jeder gilt einmal, falls Sie Ihr Telefon verlieren. | 第二验证因素已启用。请妥善保存这些恢复代码：丢失手机时每个代码可使用一次。
+Second-factor code or recovery code | دوسرے عنصر کا کوڈ یا بازیابی کوڈ | رمز العامل الثاني أو رمز الاسترداد | Code du second facteur ou de récupération | Código del segundo factor o de recuperación | Code des zweiten Faktors oder Wiederherstellungscode | 第二验证因素代码或恢复代码
+Secret connectivity key | خفیہ رابطہ کلید | مفتاح الاتصال السري | Clé secrète de connexion | Clave secreta de conexión | Geheimer Verbindungsschlüssel | 连接密钥
+Secret connectivity key (min 12 characters) | خفیہ رابطہ کلید (کم از کم 12 حروف) | مفتاح الاتصال السري (12 حرفًا على الأقل) | Clé secrète de connexion (12 caractères min.) | Clave secreta de conexión (mín. 12 caracteres) | Geheimer Verbindungsschlüssel (mind. 12 Zeichen) | 连接密钥（至少 12 个字符）
+Security | سیکیورٹی | الأمان | Sécurité | Seguridad | Sicherheit | 安全
+Sepia | سیپیا | بني داكن (سيبيا) | Sépia | Sepia | Sepia | 棕褐色
+Set up IUK Browser sync and passwords | IUK براؤزر ہم آہنگی اور پاس ورڈز سیٹ اپ کریں | إعداد مزامنة IUK Browser وكلمات المرور | Configurer la synchronisation et les mots de passe d'IUK Browser | Configurar sincronización y contraseñas de IUK Browser | Synchronisierung und Passwörter von IUK Browser einrichten | 设置 IUK 浏览器同步与密码
+Set up passwords and sync… | پاس ورڈز اور ہم آہنگی سیٹ اپ کریں… | إعداد كلمات المرور والمزامنة… | Configurer mots de passe et synchronisation… | Configurar contraseñas y sincronización… | Passwörter und Synchronisierung einrichten… | 设置密码与同步…
+Set up… | سیٹ اپ کریں… | إعداد… | Configurer… | Configurar… | Einrichten… | 设置…
+Settings | ترتیبات | الإعدادات | Paramètres | Ajustes | Einstellungen | 设置
+Show QR (this device) | QR دکھائیں (یہ آلہ) | عرض QR (هذا الجهاز) | Afficher le QR (cet appareil) | Mostrar QR (este dispositivo) | QR anzeigen (dieses Gerät) | 显示二维码（此设备）
+Show pairing QR | جوڑنے کا QR دکھائیں | عرض رمز QR للاقتران | Afficher le QR d'appairage | Mostrar QR de emparejamiento | Kopplungs-QR anzeigen | 显示配对二维码
+Show password | پاس ورڈ دکھائیں | إظهار كلمة المرور | Afficher le mot de passe | Mostrar contraseña | Passwort anzeigen | 显示密码
+Sign in to {} | {} میں سائن ان کریں | تسجيل الدخول إلى {} | Se connecter à {} | Iniciar sesión en {} | Bei {} anmelden | 登录 {}
+Signed in as {} | بطور {} سائن ان | تم تسجيل الدخول باسم {} | Connecté en tant que {} | Sesión iniciada como {} | Angemeldet als {} | 已登录为 {}
+Site | سائٹ | الموقع | Site | Sitio | Website | 网站
+Solarized Dark | سولرائزڈ گہرا | سولارايزد داكن | Solarized sombre | Solarized oscuro | Solarized Dunkel | Solarized 深色
+Solarized Light | سولرائزڈ روشن | سولارايزد فاتح | Solarized clair | Solarized claro | Solarized Hell | Solarized 浅色
+Start camera | کیمرا شروع کریں | تشغيل الكاميرا | Démarrer la caméra | Iniciar cámara | Kamera starten | 启动摄像头
+Sync | ہم آہنگی | المزامنة | Synchronisation | Sincronización | Synchronisierung | 同步
+Sync error | ہم آہنگی میں خرابی | خطأ في المزامنة | Erreur de synchronisation | Error de sincronización | Sync-Fehler | 同步错误
+Sync every | ہم آہنگی ہر | المزامنة كل | Synchroniser toutes les | Sincronizar cada | Synchronisieren alle | 同步间隔
+Sync now | ابھی ہم آہنگ کریں | زامن الآن | Synchroniser maintenant | Sincronizar ahora | Jetzt synchronisieren | 立即同步
+Sync server | ہم آہنگی سرور | خادم المزامنة | Serveur de synchronisation | Servidor de sincronización | Sync-Server | 同步服务器
+Sync server URL (optional), e.g. https://sync.example.com | ہم آہنگی سرور URL (اختیاری)، مثلاً https://sync.example.com | عنوان خادم المزامنة (اختياري)، مثل https://sync.example.com | URL du serveur de synchronisation (facultatif), ex. https://sync.example.com | URL del servidor de sincronización (opcional), p. ej. https://sync.example.com | Sync-Server-URL (optional), z. B. https://sync.example.com | 同步服务器地址（可选），例如 https://sync.example.com
+Sync: code needed | ہم آہنگی: کوڈ درکار ہے | المزامنة: الرمز مطلوب | Synchro : code requis | Sincronización: se necesita código | Sync: Code erforderlich | 同步：需要验证码
+Synced | ہم آہنگ | تمت المزامنة | Synchronisé | Sincronizado | Synchronisiert | 已同步
+Syncing… | ہم آہنگ ہو رہا ہے… | جارٍ المزامنة… | Synchronisation… | Sincronizando… | Synchronisierung läuft… | 正在同步…
+Tags | ٹیگز | الوسوم | Étiquettes | Etiquetas | Tags | 标签
+Tags, separated by commas | ٹیگز، کوما سے الگ کریں | الوسوم، مفصولة بفواصل | Étiquettes, séparées par des virgules | Etiquetas, separadas por comas | Tags, durch Kommas getrennt | 标签，以逗号分隔
+Text | متن | النص | Texte | Texto | Text | 文字
+The QR contains your secret key. Anyone who scans it, or sees a photo or screenshot of it, gets full access to your synced bookmarks and passwords. Show it only to your own second device. | QR میں آپ کی خفیہ کلید ہے۔ جو بھی اسے اسکین کرے یا اس کی تصویر یا اسکرین شاٹ دیکھے اسے آپ کے ہم آہنگ بک مارکس اور پاس ورڈز تک مکمل رسائی مل جاتی ہے۔ اسے صرف اپنے دوسرے آلے کو دکھائیں۔ | يحتوي رمز QR على مفتاحك السري. أي شخص يمسحه أو يرى صورة أو لقطة شاشة له يحصل على وصول كامل إلى إشاراتك وكلمات مرورك المتزامنة. اعرضه على جهازك الثاني فقط. | Le QR contient votre clé secrète. Quiconque le scanne, ou en voit une photo ou une capture, accède à tous vos marque-pages et mots de passe synchronisés. Ne le montrez qu'à votre second appareil. | El QR contiene su clave secreta. Quien lo escanee, o vea una foto o captura, obtiene acceso total a sus marcadores y contraseñas sincronizados. Muéstrelo solo a su segundo dispositivo. | Der QR-Code enthält Ihren geheimen Schlüssel. Wer ihn scannt oder ein Foto oder einen Screenshot davon sieht, erhält vollen Zugriff auf Ihre synchronisierten Lesezeichen und Passwörter. Zeigen Sie ihn nur Ihrem eigenen zweiten Gerät. | 二维码包含您的密钥。任何扫描它或看到其照片、截图的人都能完全访问您同步的书签和密码。请只向您自己的另一台设备显示。
+The export contains all passwords in plain text. Continue? | برآمد شدہ فائل میں تمام پاس ورڈ سادہ متن میں ہیں۔ جاری رکھیں؟ | يحتوي التصدير على كل كلمات المرور كنص عادي. المتابعة؟ | L'export contient tous les mots de passe en clair. Continuer ? | La exportación contiene todas las contraseñas en texto plano. ¿Continuar? | Der Export enthält alle Passwörter im Klartext. Fortfahren? | 导出文件包含所有明文密码。继续？
+This account has a second factor. Enter the code from your authenticator app. | اس اکاؤنٹ میں دوسرا عنصر ہے۔ اپنی تصدیقی ایپ کا کوڈ درج کریں۔ | هذا الحساب لديه عامل ثانٍ. أدخل الرمز من تطبيق المصادقة. | Ce compte a un second facteur. Saisissez le code de votre application d'authentification. | Esta cuenta tiene un segundo factor. Introduzca el código de su app de autenticación. | Dieses Konto hat einen zweiten Faktor. Geben Sie den Code Ihrer Authenticator-App ein. | 此账户启用了第二验证因素。请输入验证器应用中的代码。
+This build has no update signing key configured. | اس بلڈ میں اپ ڈیٹ سائننگ کلید ترتیب نہیں دی گئی۔ | لم يُضبط مفتاح توقيع التحديثات في هذا الإصدار. | Cette version n'a pas de clé de signature de mise à jour configurée. | Esta compilación no tiene clave de firma de actualizaciones configurada. | In diesem Build ist kein Update-Signaturschlüssel konfiguriert. | 此版本未配置更新签名密钥。
+This device is not set up yet. | یہ آلہ ابھی سیٹ اپ نہیں ہوا۔ | لم يُعدّ هذا الجهاز بعد. | Cet appareil n'est pas encore configuré. | Este dispositivo aún no está configurado. | Dieses Gerät ist noch nicht eingerichtet. | 此设备尚未设置。
+Turn off | بند کریں | إيقاف | Désactiver | Desactivar | Ausschalten | 关闭
+Turn on… | چالو کریں… | تشغيل… | Activer… | Activar… | Einschalten… | 开启…
+Type your secret connectivity key again | اپنی خفیہ رابطہ کلید دوبارہ ٹائپ کریں | اكتب مفتاح الاتصال السري مرة أخرى | Saisissez à nouveau votre clé secrète de connexion | Escriba de nuevo su clave secreta de conexión | Geben Sie Ihren geheimen Verbindungsschlüssel erneut ein | 请再次输入您的连接密钥
+Unlock | کھولیں | فتح القفل | Déverrouiller | Desbloquear | Entsperren | 解锁
+Unlock IUK Browser | IUK براؤزر کھولیں | فتح قفل IUK Browser | Déverrouiller IUK Browser | Desbloquear IUK Browser | IUK Browser entsperren | 解锁 IUK 浏览器
+Unlock IUK Browser first, then come back here. | پہلے IUK براؤزر کھولیں، پھر یہاں واپس آئیں۔ | افتح قفل IUK Browser أولًا ثم عد إلى هنا. | Déverrouillez d'abord IUK Browser, puis revenez ici. | Desbloquee primero IUK Browser y vuelva aquí. | Entsperren Sie zuerst IUK Browser und kehren Sie dann hierher zurück. | 请先解锁 IUK 浏览器，然后回到这里。
+Unlock passwords… | پاس ورڈز کھولیں… | فتح قفل كلمات المرور… | Déverrouiller les mots de passe… | Desbloquear contraseñas… | Passwörter entsperren… | 解锁密码…
+Unlock to save the password for {} on {}. | {} کا پاس ورڈ {} پر محفوظ کرنے کے لیے کھولیں۔ | افتح القفل لحفظ كلمة المرور لـ {} على {}. | Déverrouillez pour enregistrer le mot de passe de {} sur {}. | Desbloquee para guardar la contraseña de {} en {}. | Entsperren, um das Passwort für {} auf {} zu speichern. | 解锁以保存 {} 在 {} 的密码。
+Unlocking… | کھولا جا رہا ہے… | جارٍ فتح القفل… | Déverrouillage… | Desbloqueando… | Entsperren… | 正在解锁…
+Unlock… | کھولیں… | فتح القفل… | Déverrouiller… | Desbloquear… | Entsperren… | 解锁…
+Update | اپ ڈیٹ کریں | تحديث | Mettre à jour | Actualizar | Aktualisieren | 更新
+Update channel | اپ ڈیٹ چینل | قناة التحديث | Canal de mise à jour | Canal de actualización | Update-Kanal | 更新渠道
+Update the saved password for {} on {}? | {} کا محفوظ پاس ورڈ {} پر اپ ڈیٹ کریں؟ | تحديث كلمة المرور المحفوظة لـ {} على {}؟ | Mettre à jour le mot de passe enregistré de {} sur {} ? | ¿Actualizar la contraseña guardada de {} en {}? | Gespeichertes Passwort für {} auf {} aktualisieren? | 更新 {} 在 {} 已保存的密码？
+Updates | اپ ڈیٹس | التحديثات | Mises à jour | Actualizaciones | Updates | 更新
+Use pasted code | پیسٹ کیا گیا کوڈ استعمال کریں | استخدم الرمز الملصق | Utiliser le code collé | Usar el código pegado | Eingefügten Code verwenden | 使用粘贴的代码
+Use the same user name and secret key on your other devices to sync. The key never leaves this device and cannot be recovered. Write it down. | ہم آہنگی کے لیے اپنے دوسرے آلات پر یہی صارف نام اور خفیہ کلید استعمال کریں۔ کلید اس آلے سے باہر نہیں جاتی اور بازیاب نہیں ہو سکتی۔ اسے لکھ لیں۔ | استخدم اسم المستخدم والمفتاح السري نفسيهما على أجهزتك الأخرى للمزامنة. لا يغادر المفتاح هذا الجهاز ولا يمكن استرداده. دوّنه. | Utilisez le même nom d'utilisateur et la même clé secrète sur vos autres appareils pour synchroniser. La clé ne quitte jamais cet appareil et ne peut pas être récupérée. Notez-la. | Use el mismo nombre de usuario y clave secreta en sus otros dispositivos para sincronizar. La clave nunca sale de este dispositivo y no se puede recuperar. Anótela. | Verwenden Sie auf Ihren anderen Geräten denselben Benutzernamen und geheimen Schlüssel. Der Schlüssel verlässt dieses Gerät nie und kann nicht wiederhergestellt werden. Notieren Sie ihn. | 在其他设备上使用相同的用户名和密钥即可同步。密钥不会离开此设备，也无法找回，请务必记下。
+User name | صارف نام | اسم المستخدم | Nom d'utilisateur | Nombre de usuario | Benutzername | 用户名
+User name or e-mail (same on every device) | صارف نام یا ای میل (ہر آلے پر ایک جیسا) | اسم المستخدم أو البريد (نفسه على كل جهاز) | Nom d'utilisateur ou e-mail (identique sur chaque appareil) | Nombre de usuario o correo (el mismo en cada dispositivo) | Benutzername oder E-Mail (auf jedem Gerät gleich) | 用户名或邮箱（每台设备相同）
+Version {} | ورژن {} | الإصدار {} | Version {} | Versión {} | Version {} | 版本 {}
+Version {} is available. | ورژن {} دستیاب ہے۔ | الإصدار {} متاح. | La version {} est disponible. | La versión {} está disponible. | Version {} ist verfügbar. | 版本 {} 可用。
+View page source | صفحے کا سورس دیکھیں | عرض مصدر الصفحة | Afficher le code source de la page | Ver código fuente de la página | Seitenquelltext anzeigen | 查看页面源代码
+Visits | وزٹس | الزيارات | Visites | Visitas | Besuche | 访问次数
+You have the latest version ({}). | آپ کے پاس تازہ ترین ورژن ({}) ہے۔ | لديك أحدث إصدار ({}). | Vous avez la dernière version ({}). | Tiene la última versión ({}). | Sie haben die neueste Version ({}). | 您已是最新版本（{}）。
+Zoom | زوم | التكبير | Zoom | Zoom | Zoom | 缩放
+Zoom in | زوم ان | تكبير | Zoom avant | Acercar | Vergrößern | 放大
+Zoom out | زوم آؤٹ | تصغير | Zoom arrière | Alejar | Verkleinern | 缩小
+one host per line, e.g. news.ycombinator.com | ہر لائن میں ایک ہوسٹ، مثلاً news.ycombinator.com | مضيف واحد في كل سطر، مثل news.ycombinator.com | un hôte par ligne, p. ex. news.ycombinator.com | un host por línea, p. ej. news.ycombinator.com | ein Host pro Zeile, z. B. news.ycombinator.com | 每行一个主机，例如 news.ycombinator.com
+{} of {} | {} از {} | {} من {} | {} sur {} | {} de {} | {} von {} | 第 {} 项，共 {} 项
+{} wants permission: {} | {} اجازت چاہتا ہے: {} | يطلب {} الإذن: {} | {} demande l'autorisation : {} | {} solicita permiso: {} | {} bittet um Erlaubnis: {} | {} 请求权限：{}
+Add filter list… | فلٹر فہرست شامل کریں… | إضافة قائمة مرشّحات… | Ajouter une liste de filtres… | Añadir lista de filtros… | Filterliste hinzufügen… | 添加过滤列表…
+Allow | اجازت دیں | سماح | Autoriser | Permitir | Erlauben | 允许
+Allow trackers on this site | اس سائٹ پر ٹریکرز کی اجازت دیں | السماح بالمتتبعات على هذا الموقع | Autoriser les traceurs sur ce site | Permitir rastreadores en este sitio | Tracker auf dieser Seite erlauben | 在此网站上允许跟踪器
+Allowed | اجازت یافتہ | مسموح | Autorisé | Permitido | Erlaubt | 已允许
+Block | بلاک کریں | حظر | Bloquer | Bloquear | Blockieren | 阻止
+Block trackers and ads | ٹریکرز اور اشتہارات بلاک کریں | حظر المتتبعات والإعلانات | Bloquer les traceurs et les publicités | Bloquear rastreadores y anuncios | Tracker und Werbung blockieren | 拦截跟踪器和广告
+Blocked | بلاک شدہ | محظور | Bloqué | Bloqueado | Blockiert | 已阻止
+Camera | کیمرا | الكاميرا | Caméra | Cámara | Kamera | 摄像头
+Camera and microphone | کیمرا اور مائیکروفون | الكاميرا والميكروفون | Caméra et microphone | Cámara y micrófono | Kamera und Mikrofon | 摄像头和麦克风
+Cancelled. | منسوخ کر دیا گیا۔ | تم الإلغاء. | Annulé. | Cancelado. | Abgebrochen. | 已取消。
+Clipboard | کلپ بورڈ | الحافظة | Presse-papiers | Portapapeles | Zwischenablage | 剪贴板
+Could not set the default browser automatically. Choose IUK Browser in your system settings. | ڈیفالٹ براؤزر خود بخود سیٹ نہیں ہو سکا۔ اپنے سسٹم کی ترتیبات میں IUK براؤزر منتخب کریں۔ | تعذّر تعيين المتصفح الافتراضي تلقائيًا. اختر IUK Browser من إعدادات النظام. | Impossible de définir le navigateur par défaut automatiquement. Choisissez IUK Browser dans les paramètres du système. | No se pudo establecer el navegador predeterminado automáticamente. Elija IUK Browser en los ajustes del sistema. | Der Standardbrowser konnte nicht automatisch festgelegt werden. Wählen Sie IUK Browser in den Systemeinstellungen. | 无法自动设为默认浏览器。请在系统设置中选择 IUK 浏览器。
+Filter lists (Adblock Plus syntax) | فلٹر فہرستیں (Adblock Plus نحو) | قوائم المرشّحات (صيغة Adblock Plus) | Listes de filtres (syntaxe Adblock Plus) | Listas de filtros (sintaxis Adblock Plus) | Filterlisten (Adblock-Plus-Syntax) | 过滤列表（Adblock Plus 语法）
+Forget all saved site permissions? | تمام محفوظ شدہ سائٹ اجازتیں بھول جائیں؟ | نسيان كل أذونات المواقع المحفوظة؟ | Oublier toutes les autorisations de site enregistrées ? | ¿Olvidar todos los permisos de sitios guardados? | Alle gespeicherten Website-Berechtigungen vergessen? | 忘记所有已保存的网站权限？
+IUK Browser is now your default browser. | IUK براؤزر اب آپ کا ڈیفالٹ براؤزر ہے۔ | أصبح IUK Browser متصفحك الافتراضي. | IUK Browser est maintenant votre navigateur par défaut. | IUK Browser es ahora su navegador predeterminado. | IUK Browser ist jetzt Ihr Standardbrowser. | IUK 浏览器现已成为您的默认浏览器。
+Loaded {} rules | {} قواعد لوڈ ہو گئے | تم تحميل {} قاعدة | {} règles chargées | {} reglas cargadas | {} Regeln geladen | 已加载 {} 条规则
+Local fonts | مقامی فونٹس | الخطوط المحلية | Polices locales | Fuentes locales | Lokale Schriftarten | 本地字体
+Location | مقام | الموقع الجغرافي | Position | Ubicación | Standort | 位置
+Lock passwords after | پاس ورڈز مقفل کریں بعد از | قفل كلمات المرور بعد | Verrouiller les mots de passe après | Bloquear contraseñas después de | Passwörter sperren nach | 自动锁定密码时间
+Microphone | مائیکروفون | الميكروفون | Microphone | Micrófono | Mikrofon | 麦克风
+Mouse pointer lock | ماؤس پوائنٹر لاک | قفل مؤشر الماوس | Verrouillage du pointeur | Bloqueo del puntero | Mauszeiger-Sperre | 鼠标指针锁定
+Notifications | اطلاعات | الإشعارات | Notifications | Notificaciones | Benachrichtigungen | 通知
+Or paste a pairing code (starts with IUKB1: or IUKB2:) | یا جوڑنے کا کوڈ پیسٹ کریں (IUKB1: یا IUKB2: سے شروع ہوتا ہے) | أو الصق رمز الاقتران (يبدأ بـ IUKB1: أو IUKB2:) | Ou collez un code d'appairage (commence par IUKB1: ou IUKB2:) | O pegue un código de emparejamiento (empieza por IUKB1: o IUKB2:) | Oder Kopplungscode einfügen (beginnt mit IUKB1: oder IUKB2:) | 或粘贴配对代码（以 IUKB1: 或 IUKB2: 开头）
+Paired. This QR no longer works. | جوڑ دیا گیا۔ یہ QR اب کام نہیں کرتا۔ | تم الاقتران. لم يعد رمز QR هذا يعمل. | Appairé. Ce QR ne fonctionne plus. | Emparejado. Este QR ya no funciona. | Gekoppelt. Dieser QR-Code funktioniert nicht mehr. | 已配对。此二维码已失效。
+Passwords locked after {} minutes of inactivity. | {} منٹ کی غیر فعالیت کے بعد پاس ورڈز مقفل ہو گئے۔ | تم قفل كلمات المرور بعد {} دقيقة من عدم النشاط. | Mots de passe verrouillés après {} minutes d'inactivité. | Contraseñas bloqueadas tras {} minutos de inactividad. | Passwörter nach {} Minuten Inaktivität gesperrt. | 闲置 {} 分钟后已锁定密码。
+Permission | اجازت | الإذن | Autorisation | Permiso | Berechtigung | 权限
+Reset | ری سیٹ | إعادة تعيين | Réinitialiser | Restablecer | Zurücksetzen | 重置
+Reset all | سب ری سیٹ کریں | إعادة تعيين الكل | Tout réinitialiser | Restablecer todo | Alle zurücksetzen | 全部重置
+Screen sharing | اسکرین شیئرنگ | مشاركة الشاشة | Partage d'écran | Compartir pantalla | Bildschirmfreigabe | 屏幕共享
+Set as default browser… | ڈیفالٹ براؤزر بنائیں… | تعيين كمتصفح افتراضي… | Définir comme navigateur par défaut… | Establecer como navegador predeterminado… | Als Standardbrowser festlegen… | 设为默认浏览器…
+Site permissions | سائٹ اجازتیں | أذونات المواقع | Autorisations des sites | Permisos de sitios | Website-Berechtigungen | 网站权限
+Site permissions… | سائٹ اجازتیں… | أذونات المواقع… | Autorisations des sites… | Permisos de sitios… | Website-Berechtigungen… | 网站权限…
+State | حالت | الحالة | État | Estado | Status | 状态
+This QR works once and expires in 2 minutes. It does not contain your secret key, but anyone who scans it before your own device could join your account. Show it only to your own second device. | یہ QR صرف ایک بار کام کرتا ہے اور 2 منٹ میں ختم ہو جاتا ہے۔ اس میں آپ کی خفیہ کلید نہیں، لیکن آپ کے اپنے آلے سے پہلے جو بھی اسے اسکین کرے وہ آپ کے اکاؤنٹ میں شامل ہو سکتا ہے۔ اسے صرف اپنے دوسرے آلے کو دکھائیں۔ | يعمل رمز QR هذا مرة واحدة وينتهي خلال دقيقتين. لا يحتوي على مفتاحك السري، لكن أي شخص يمسحه قبل جهازك قد ينضم إلى حسابك. اعرضه على جهازك الثاني فقط. | Ce QR ne fonctionne qu'une fois et expire en 2 minutes. Il ne contient pas votre clé secrète, mais quiconque le scanne avant votre propre appareil pourrait rejoindre votre compte. Ne le montrez qu'à votre second appareil. | Este QR funciona una sola vez y caduca en 2 minutos. No contiene su clave secreta, pero quien lo escanee antes que su propio dispositivo podría unirse a su cuenta. Muéstrelo solo a su segundo dispositivo. | Dieser QR-Code funktioniert nur einmal und läuft nach 2 Minuten ab. Er enthält Ihren geheimen Schlüssel nicht, aber wer ihn vor Ihrem eigenen Gerät scannt, könnte Ihrem Konto beitreten. Zeigen Sie ihn nur Ihrem eigenen zweiten Gerät. | 此二维码只能使用一次，2 分钟后失效。它不包含您的密钥，但任何人若抢在您自己的设备之前扫描，就可能加入您的账户。请只向您自己的另一台设备显示。
+This is not an IUK Browser pairing code | یہ IUK براؤزر کا جوڑنے کا کوڈ نہیں ہے | هذا ليس رمز اقتران لـ IUK Browser | Ce n'est pas un code d'appairage IUK Browser | Este no es un código de emparejamiento de IUK Browser | Dies ist kein IUK-Browser-Kopplungscode | 这不是 IUK 浏览器的配对代码
+Windows asks you to confirm the default browser in Settings. Choose IUK Browser there. | ونڈوز ترتیبات میں ڈیفالٹ براؤزر کی تصدیق مانگتا ہے۔ وہاں IUK براؤزر منتخب کریں۔ | يطلب Windows تأكيد المتصفح الافتراضي في الإعدادات. اختر IUK Browser هناك. | Windows demande de confirmer le navigateur par défaut dans les Paramètres. Choisissez-y IUK Browser. | Windows le pide confirmar el navegador predeterminado en Configuración. Elija IUK Browser allí. | Windows bittet in den Einstellungen um Bestätigung des Standardbrowsers. Wählen Sie dort IUK Browser. | Windows 会在“设置”中请您确认默认浏览器，请在那里选择 IUK 浏览器。
+{} blocked | {} بلاک کیے گئے | تم حظر {} | {} bloqués | {} bloqueados | {} blockiert | 已拦截 {} 项

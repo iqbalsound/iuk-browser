@@ -1,0 +1,17 @@
+[Unit]
+Description=IUK Browser sync relay
+After=network.target
+
+[Service]
+User=iuk-relay
+Environment=HOST=127.0.0.1 PORT=8787 DATA_DIR=/var/lib/iuk-relay TRUST_PROXY=1
+ExecStart=/usr/bin/python3 /opt/iuk-relay/iuk_relay.py
+Restart=on-failure
+StateDirectory=iuk-relay
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

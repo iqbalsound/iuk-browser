@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iuk-browser"
+version = "2.2.0"
+description = "IUK Browser: Qt WebEngine browser with end-to-end encrypted bookmark and password sync"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+  "PySide6>=6.7",
+  "argon2-cffi>=23.1",
+  "cryptography>=42",
+  "segno>=1.6",
+  "zxing-cpp>=2.2",
+  "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-qt>=4.4", "pyinstaller>=6.6"]
+
+[project.scripts]
+iuk-browser = "iuk_browser.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+iuk_browser = ["i18n/*.json", "resources/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,0 +1,84 @@
+# Runs when you PUBLISH the draft release (or by hand for a tag): builds the signed apt + dnf repositories and the signed
+# Windows auto-update manifest, and pushes them to the gh-pages branch (GitHub Pages: Settings > Pages > Deploy from branch gh-pages).
+#
+# Secrets:  GPG_PRIVATE_KEY (base64 of the ARMORED key)  GPG_PASSPHRASE  UPDATE_SIGNING_KEY (see packaging/tools/gen_update_key.py)
+name: Publish repositories and update channel
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Published release tag (e.g. v2.1.0)"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ inputs.tag || github.event.release.tag_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ inputs.tag || github.event.release.tag_name }}", path: src }
+      - name: Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y apt-utils createrepo-c gnupg rpm
+          python3 -m pip install cryptography
+      - name: Download the release assets
+        run: |
+          mkdir -p assets
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir assets --pattern '*.deb' --pattern '*.rpm' --pattern '*-setup.exe'
+          ls -lh assets
+      - name: Check out gh-pages (previous releases stay available)
+        run: |
+          if git ls-remote --exit-code --heads "https://github.com/${GITHUB_REPOSITORY}.git" gh-pages >/dev/null 2>&1; then
+            git clone --depth 1 --branch gh-pages "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" site
+          else
+            mkdir site && git -C site init -q -b gh-pages
+            git -C site remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          fi
+      - name: Build the signed repositories
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          [ -n "$GPG_PRIVATE_KEY" ] || { echo "::error::GPG_PRIVATE_KEY secret is required to publish the apt/dnf repositories"; exit 1; }
+          OWNER="${GITHUB_REPOSITORY%%/*}"; REPO="${GITHUB_REPOSITORY##*/}"
+          export SITE_URL="https://${OWNER,,}.github.io/${REPO}"
+          RPM_SIGNED=0
+          for f in assets/*.rpm; do
+            sig="$(rpm -qp --qf '%{SIGPGP:pgpsig}%{RSAHEADER:pgpsig}' "$f" 2>/dev/null || true)"
+            case "$sig" in ""|"(none)"*|*"(none)"|"(none)(none)") ;; *) RPM_SIGNED=1;; esac
+          done
+          export RPM_SIGNED
+          src/packaging/repo/build-site.sh assets site
+      - name: Sign the update manifest
+        env:
+          UPDATE_SIGNING_KEY: ${{ secrets.UPDATE_SIGNING_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "$UPDATE_SIGNING_KEY" ]; then echo "::warning::UPDATE_SIGNING_KEY is not set: the in-app updater will not see this release"; exit 0; fi
+          VERSION="${TAG#v}"; CHANNEL=stable; case "$VERSION" in *-*) CHANNEL=beta;; esac
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json body -q .body > notes.md
+          python3 src/packaging/tools/make_update_manifest.py --version "$VERSION" --channel "$CHANNEL" --assets assets --out site/update \
+            --download-base "https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}" \
+            --page "https://github.com/${GITHUB_REPOSITORY}/releases/tag/${TAG}" --notes-file notes.md
+      - name: Publish to gh-pages
+        run: |
+          cd site
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publish ${TAG}" || { echo "nothing changed"; exit 0; }
+          git push origin HEAD:gh-pages

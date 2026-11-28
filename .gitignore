@@ -1,8 +1,11 @@
-node_modules/
-dist/
-.build/
-server/data/
 __pycache__/
 *.pyc
-*.xpi
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.build/
+.venv/
+server/data/
+*.spec.bak
 .DS_Store

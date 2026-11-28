@@ -1,0 +1,85 @@
+name: iuk-browser
+arch: amd64
+platform: linux
+version: ${VERSION}
+release: "1"
+section: web
+priority: optional
+maintainer: ${MAINTAINER}
+description: |
+  IUK Browser: a Qt WebEngine browser with end-to-end encrypted bookmark and password sync,
+  QR device pairing, themes and color invert.
+homepage: https://github.com/${GITHUB_REPOSITORY}
+license: MIT
+provides: [www-browser, gnome-www-browser, x-www-browser]
+contents:
+  - src: ./dist/iuk-browser
+    dst: /opt/iuk-browser
+    type: tree
+  - src: /opt/iuk-browser/iuk-browser
+    dst: /usr/bin/iuk-browser
+    type: symlink
+  - src: ./packaging/linux/iuk-browser.desktop
+    dst: /usr/share/applications/iuk-browser.desktop
+  - src: ./branding/generated/hicolor
+    dst: /usr/share/icons/hicolor
+    type: tree
+  - src: ./LICENSE
+    dst: /usr/share/doc/iuk-browser/copyright
+scripts:
+  postinstall: ./packaging/linux/postinst.sh
+  postremove: ./packaging/linux/postrm.sh
+overrides:
+  deb:
+    depends:
+      - libnss3
+      - libnspr4
+      - libxkbcommon0
+      - libxkbcommon-x11-0
+      - libxcb-cursor0
+      - libxcb-icccm4
+      - libxcb-image0
+      - libxcb-keysyms1
+      - libxcb-randr0
+      - libxcb-render-util0
+      - libxcb-shape0
+      - libxcb-xkb1
+      - libegl1
+      - libgl1
+      - libopengl0
+      - libdbus-1-3
+      - libfontconfig1
+      - libglib2.0-0
+      - libxcomposite1
+      - libxdamage1
+      - libxrandr2
+      - libxtst6
+      - libxkbfile1
+      - libpulse0
+      - "libasound2t64 | libasound2"
+  rpm:
+    depends:
+      - nss
+      - nspr
+      - alsa-lib
+      - libxkbcommon
+      - libxkbcommon-x11
+      - xcb-util-cursor
+      - xcb-util-image
+      - xcb-util-keysyms
+      - xcb-util-renderutil
+      - xcb-util-wm
+      - mesa-libEGL
+      - mesa-libGL
+      - libglvnd-opengl
+      - dbus-libs
+      - fontconfig
+      - glib2
+      - libXcomposite
+      - libXdamage
+      - libXrandr
+      - libXtst
+      - libxkbfile
+      - pulseaudio-libs
+    signature:
+      key_file: ${NFPM_SIGNING_KEY_FILE}

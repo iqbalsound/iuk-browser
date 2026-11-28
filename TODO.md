@@ -1,29 +1,22 @@
 # TODO
 
-## Done in 1.1.0
+## Done in 2.2.0
+- [x] Key derivation shows progress and can be cancelled before anything is stored
+- [x] One-use, short-lived pairing codes (the QR no longer carries the account key)
+- [x] Auto-lock after inactivity
+- [x] Windows: selectable as a default browser (+ "Set as default browser" on Linux and Windows)
+- [x] AppImage
+- [x] Tracker / ad blocking (filter engine, starter list, per-site allow, your own lists)
+- [x] Per-site permission manager
+- [x] Tooling for native-speaker translation review
+- [~] macOS build + notarization: scripts and an experimental CI job written, **not run** (no macOS machine)
 
-- [x] **QR pairing** (show on one device, scan on the other; camera, image or pasted code)
-- [x] **Argon2id** key derivation with automatic PBKDF2 migration
-
-## Planned next
-
-- [ ] Run Argon2id in a Web Worker so the browser UI never pauses while deriving the key
-- [ ] Time-limited, one-use pairing tokens (so a leaked QR screenshot cannot be reused after pairing)
-
-## First source build: verify
-
-- [ ] `build/build-source.sh` completes on a clean Linux machine and produces DEB + RPM
-- [ ] Window, taskbar, alt-tab and *minimized window* icons show the IUK logo (Wayland and X11)
-- [ ] About dialog, `about:` pages and the new-window/private-window launcher actions show IUK Browser branding
-- [ ] The bundled add-on installs unsigned (`about:addons`), and `about:policies` shows no errors
-- [ ] Profile location and `MOZ_APP_REMOTINGNAME` behave as expected (no clash with a normal Firefox)
-- [ ] Windows: build with MozillaBuild (`build/mozconfig.windows`), run `packaging/build-bundle.sh windows` with `FIREFOX_ZIP`
-
-## Later
-
-- [ ] Rename the internal binary from `firefox` to `iuk-browser` (needs `MOZ_APP_NAME`, touches many build files)
-- [ ] apt/dnf repository and a Windows auto-update channel (updates are currently disabled by policy)
-- [ ] Windows CI for the source build; code-sign the installer
-- [ ] Second-factor option for the relay; tags and folder-level conflict handling for bookmarks
-- [ ] Clear the clipboard automatically after copying a password
-- [ ] Translations of the extension UI
+## Still open
+- [ ] Native-speaker review of the six translations (use `tools/review_translations.py`, see docs/TRANSLATING.md)
+- [ ] Run the macOS job once with Apple credentials and fix what it finds
+- [ ] Flatpak (Flathub) packaging
+- [ ] Auto-download of filter lists (EasyList / EasyPrivacy) with signatures or pinned hashes
+- [ ] Sync of browsing history and open tabs (encrypted, opt-in)
+- [ ] Extensions API (WebExtensions are not available in Qt WebEngine)
+- [ ] Hardware-key (WebAuthn / FIDO2) second factor for the relay
+- [ ] Per-site zoom and a settings page for permission defaults

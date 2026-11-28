@@ -1,40 +1,79 @@
 # Releasing IUK Browser
 
-The release pipeline is `.github/workflows/release.yml`. It builds the **extension**, **DEB**, **RPM** and the **Windows installer (`-setup.exe`) and portable zip**, writes `SHA256SUMS`, and creates a **draft** GitHub Release for you to review and publish.
+Pipeline: **tag** → `release.yml` builds everything and drafts a GitHub Release → you **publish** it →
+`publish-repos.yml` publishes the apt/dnf repositories and the signed update manifest.
 
-## Cut a release
+## One-time setup
 
-1. Bump the version in **both** `extension/manifest.json` and `package.json`, and add a `## [x.y.z]` section to `CHANGELOG.md` (it becomes the release notes). The workflow fails early if these disagree with the tag.
-2. Commit and push over SSH: `git push origin main`.
-3. Tag and push the tag: `git tag v1.1.0 && git push origin v1.1.0`.
-4. Watch **Actions → Release**. When it is green, open **Releases**, check the draft and press **Publish**.
+### 1. Push the repository over SSH
+```bash
+git init -b main && git add -A && git commit -m "IUK Browser 2.1.0"
+git remote add origin git@github.com:iqbalsound/iuk-browser.git      # your account/repo
+git push -u origin main
+```
+Settings → Actions → General → Workflow permissions: **Read and write**.
 
-You can also run it by hand: **Actions → Release → Run workflow** (choose the mode; leave *tag* empty to just build artifacts).
+### 2. GitHub Pages (hosts the apt/dnf repos and the update manifests)
+Settings → Pages → Source: **Deploy from a branch**, branch `gh-pages`, folder `/ (root)`. The branch is created by the first publish.
+Your site will be `https://<your-user>.github.io/<repo>/`. Put that into `UPDATE_BASE_URL` (+ `/update`) in
+`src/iuk_browser/core/update_keys.py`.
 
-## Two build modes
+### 3. Signing keys (secrets: Settings → Secrets and variables → Actions)
 
-| | `bundle` (default) | `source` |
+| Secret | What | How |
 |---|---|---|
-| What | Official Firefox ESR binaries + IUK layer and icons | Gecko compiled from source with IUK branding |
-| Time | minutes | hours (Linux), experimental (Windows) |
-| Files attached to the release | extension only | extension + DEB + RPM + setup.exe + portable zip |
-| Why | Mozilla's trademark policy forbids publishing Mozilla-branded modified binaries; bundle output stays in the run's private artifacts for personal use | The unofficial-branding build contains no Mozilla marks and may be redistributed |
+| `GPG_PRIVATE_KEY` | signs the apt/dnf metadata and the RPM | `gpg --quick-generate-key "IUK Browser Releases <you@example.com>" ed25519 sign 0` then `gpg --armor --export-secret-keys <KEYID> \| base64 -w0` |
+| `GPG_PASSPHRASE` | its passphrase | chosen at generation |
+| `UPDATE_SIGNING_KEY` | signs the in-app update manifest | `python packaging/tools/gen_update_key.py`: private line → secret, **public line → `UPDATE_PUBLIC_KEYS` in `update_keys.py`** (commit that) |
+| `WINDOWS_CERT_PFX_BASE64`, `WINDOWS_CERT_PASSWORD` | Authenticode certificate for `iuk-browser.exe` and the installer | `base64 -w0 cert.pfx` (an OV or EV code-signing certificate) |
 
-Set the default for tag pushes in **Settings → Secrets and variables → Actions → Variables**: `IUK_BUILD_MODE` = `bundle` or `source`.
+| `APPLE_CERT_P12_BASE64`, `APPLE_CERT_PASSWORD`, `APPLE_ID`, `APPLE_TEAM_ID`, `APPLE_APP_PASSWORD` | macOS Developer ID signing and notarization (optional, experimental) | Apple Developer account; the app-specific password is created at appleid.apple.com |
 
-**Want the DEB, RPM and EXE on the release page in bundle mode?** Allowed for a **private** repository or personal use: tick *attach_binaries* when running the workflow by hand, or set the variable `IUK_ATTACH_BUNDLES` = `true` for tag pushes. The release notes then say the packages are Mozilla-branded and not for public redistribution. For a **public** repository use `source` mode instead.
+Back up both private keys. Without the update key, installed copies cannot trust new updates; without the GPG key, apt/dnf
+users must re-import a new key. Every secret is optional, but without them the output is unsigned (the workflows warn).
+Azure Trusted Signing or SignPath can replace the PFX step in `packaging/windows/sign.ps1`.
 
-## Runners for source builds
+## Every release
+1. Bump the version in `pyproject.toml` **and** `src/iuk_browser/__init__.py`; add a `## [x.y.z]` section to `CHANGELOG.md`.
+2. `git commit -am "Release x.y.z" && git push origin main` (CI must be green).
+3. Tag and push the tag: `git tag v2.1.0 && git push origin v2.1.0`. The workflow refuses a tag that disagrees with the files.
+4. Watch **Actions → Release**. It produces `iuk-browser_<v>-1_amd64.deb`, `iuk-browser-<v>-1.x86_64.rpm`, `iuk-browser-<v>-x86_64.AppImage`,
+   `iuk-browser-<v>-setup.exe`, `iuk-browser-<v>-win64-portable.zip`, `SHA256SUMS`, a **draft** release, and (if the experimental macOS job
+   succeeds) `iuk-browser-<v>-macos-arm64.dmg`. The macOS job may fail without blocking the release.
+5. Open **Releases**, check the draft, press **Publish release**. `publish-repos.yml` then updates `gh-pages`.
+   (Pre-release versions such as `2.2.0-beta.1` go to the `beta` update channel.)
 
-Gecko needs about 40 GB of disk and several hours. Standard GitHub-hosted runners have a 6 hour job limit and little disk, so a source build may fail there. Create a larger runner or a self-hosted runner and set the repository variables `LINUX_RUNNER` and `WINDOWS_RUNNER` to its label. The Windows source build uses MozillaBuild and is experimental; if it cannot succeed, build Windows locally ([BUILD-FROM-SOURCE.md](BUILD-FROM-SOURCE.md)) and attach the installer to the draft by hand.
+Re-run a failed publish: Actions → *Publish repositories and update channel* → Run workflow → tag.
 
-## What the jobs do
+## Installing from the repositories
+```bash
+# Debian / Ubuntu
+sudo install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://<user>.github.io/<repo>/iuk-browser.gpg | sudo tee /etc/apt/keyrings/iuk-browser.gpg >/dev/null
+curl -fsSL https://<user>.github.io/<repo>/apt/iuk-browser.sources | sudo tee /etc/apt/sources.list.d/iuk-browser.sources >/dev/null
+sudo apt update && sudo apt install iuk-browser
 
-`meta` (validates tag/version/changelog, picks the Firefox ESR tag) → `test` (unit tests, lint, builds `iuk-browser-<v>-extension.zip` and `.xpi`) → `linux` (DEB + RPM) and `overlay` → `windows-build` → `windows` (installer + zip) → `release` (draft).
+# Fedora / RHEL
+sudo curl -fsSL -o /etc/yum.repos.d/iuk-browser.repo https://<user>.github.io/<repo>/rpm/iuk-browser.repo
+sudo dnf install iuk-browser
+```
+AppImage: `chmod +x iuk-browser-*.AppImage && ./iuk-browser-*.AppImage`.
+Windows: run the installer; it installs per user and the app updates itself (Settings → Updates; checks daily).
 
-## Install notes
+## Build locally
+```bash
+pip install -e ".[dev]"
+python -m PyInstaller packaging/iuk-browser.spec --noconfirm     # dist/iuk-browser/iuk-browser
+packaging/build-linux.sh 2.1.0                                   # needs nfpm; writes dist/pkg/*.deb, *.rpm
+powershell -File packaging\build-windows.ps1 -Version 2.1.0      # on Windows; needs NSIS (choco install nsis)
+```
+Set `QT_QPA_PLATFORM=offscreen` when freezing on a machine without a display.
 
-- DEB: `sudo apt install ./iuk-browser_1.1.0-1_amd64.deb` · RPM: `sudo dnf install ./iuk-browser-1.1.0-1.x86_64.rpm`
-- Windows: run `iuk-browser-1.1.0-setup.exe`, or unzip the portable zip. The installer is unsigned, so SmartScreen will warn until it builds reputation or you sign it.
-- Verify downloads: `sha256sum -c SHA256SUMS`.
-- Upgrading from 1.0: install, open the browser, unlock the vault on every device. Each vault migrates to Argon2id at its first unlock; unlock all devices to finish.
+## Troubleshooting
+| Symptom | Cause / fix |
+|---|---|
+| "CHANGELOG.md has no section for X" or version mismatch | the three version places disagree: fix and re-tag (`git tag -d v2.1.0 && git push origin :refs/tags/v2.1.0`) |
+| apt says NO_PUBKEY / "not signed" | the key file in `/etc/apt/keyrings/` is missing or stale; re-download `iuk-browser.gpg` |
+| dnf: "repomd.xml GPG signature verification error" | re-import `iuk-browser.asc`; check `GPG_PRIVATE_KEY` is the **armored** key, base64-encoded |
+| Windows SmartScreen warning | the installer is unsigned or the certificate is new (OV certificates build reputation over time; EV is immediate) |
+| The app does not offer updates | `UPDATE_PUBLIC_KEYS` is empty, `UPDATE_BASE_URL` is wrong, or `UPDATE_SIGNING_KEY` was missing when the release was published |

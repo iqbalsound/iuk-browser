@@ -1,0 +1,22 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=IUK Browser
+GenericName=Web Browser
+Comment=Browser with end-to-end encrypted bookmark and password sync
+Exec=iuk-browser %U
+Icon=iuk-browser
+Terminal=false
+Categories=Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/https;
+StartupWMClass=iuk-browser
+StartupNotify=true
+Actions=new-window;new-private-window;
+
+[Desktop Action new-window]
+Name=New Window
+Exec=iuk-browser %U
+
+[Desktop Action new-private-window]
+Name=New Private Window
+Exec=iuk-browser --private

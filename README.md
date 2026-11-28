@@ -1,107 +1,102 @@
-# IUK Browser
+# IUK Browser 2.2
 
-A Gecko (Firefox ESR) based browser with its own name, icons and branding, plus:
+A web browser built on **Qt WebEngine (PySide6)** with **end-to-end encrypted sync** of bookmarks and passwords.
 
-- **Encrypted sync of bookmarks and passwords** between devices that share the same *user name + secret connectivity key*, protected with **Argon2id**
-- **QR pairing**: set up a second device by scanning a QR code instead of retyping the key
-- A built-in **password manager** (vault, autofill, save prompt, generator, CSV import/export)
-- **Themes** (7 presets + custom colors) and **color invert** (global, per site, plus brightness/contrast/sepia)
-- Packages for **DEB**, **RPM** and **Windows** (installer + portable zip)
+- **Browser**: tabs, address bar with search, history, downloads, find in page, zoom, view source, print to PDF, developer tools,
+  private windows, session restore, permission prompts, single instance.
+- **Sync** between devices that share the same *user name + secret connectivity key*. Argon2id key derivation, AES-256-GCM,
+  a zero-knowledge relay that only ever stores ciphertext, last-write-wins merge **per field**.
+- **Password manager**: encrypted vault, autofill (explicit action, isolated from page scripts), save/update prompt, generator,
+  CSV import/export, **clipboard cleared automatically** after copying.
+- **QR pairing with one-time codes**: the QR never contains your key, works once and expires after 2 minutes; the other device
+  scans it (camera, image or pasted code) and the showing device sees that it was used.
+- **Bookmarks with tags and folders**; conflicts between devices are resolved without losing data (see below).
+- **Second factor for the sync relay** (TOTP authenticator app + recovery codes), optional.
+- **Tracker and ad blocking** (Adblock-Plus-syntax engine, starter list, your own lists, per-site allow) and a **site permission
+  manager**.
+- **Auto-lock** after inactivity and automatic **clipboard clearing**.
+- **Themes** (7 presets + custom colors) and **color invert** (global or per site, brightness / contrast / sepia).
+- **Languages**: English, Urdu, Arabic, French, Spanish, German, Simplified Chinese (right-to-left layouts for Urdu and Arabic).
+- **Packages**: DEB, RPM (signed apt/dnf repositories), AppImage, Windows installer (per-user, code-signed, **auto-updating**,
+  selectable as default browser) and portable zip; an experimental macOS `.dmg`.
 
-![icon set](branding/preview.png)
+Everything is checked by automated tests; see [docs/FEATURES.md](docs/FEATURES.md) for the evidence and for what is still manual.
 
-## What is in this repository
-
-| Part | What it is | Where |
-|---|---|---|
-| Extension | WebExtension for sync, vault, themes, invert | `extension/` |
-| Relay server | Zero-dependency Node server storing one opaque encrypted blob per account | `server/` |
-| Branding | SVG artwork, icon generator, and a script that rebrands a Firefox source tree | `branding/` |
-| Source build | mozconfigs + `build/build-source.sh` (Firefox ESR → IUK Browser) | `build/` |
-| Packaging | DEB/RPM (nfpm), Windows NSIS installer + zip | `packaging/` |
-| Distribution layer | `policies.json`, autoconfig (quick bundles only) | `distribution/` |
-
-## Two ways to get a browser
-
-1. **Source build (recommended, publishable).** Builds Gecko from the Firefox ESR source with the *unofficial branding* path and `browser/branding/iuk-browser`. No Mozilla name, logo or update servers, so you may redistribute the binaries. See [docs/BUILD-FROM-SOURCE.md](docs/BUILD-FROM-SOURCE.md).
-   ```bash
-   build/build-source.sh          # 1-4 hours, ~40 GB disk; outputs dist/*.deb and dist/*.rpm
-   ```
-2. **Quick bundle (personal use).** Downloads the official Firefox ESR, overlays the IUK layer and icons in minutes. These binaries are still Mozilla's, so keep them private.
-   ```bash
-   packaging/build-bundle.sh linux 0.1.0     # DEB + RPM
-   packaging/build-bundle.sh windows 0.1.0   # setup.exe + portable zip
-   ```
-
-## Icons everywhere
-
-One logo (a globe with a keyhole) drawn in `branding/src/*.svg` and rendered natively at every size, with a simplified bold version for 32 px and below so it stays crisp in the title bar and taskbar:
-
-window / taskbar / **minimized window** / alt-tab (Linux hicolor + `StartupWMClass`), `.exe` and Start-menu shortcuts, jump-list "new tab / new window / private window", private-browsing variant, HTML and PDF document icons, About dialog and wordmark, Windows tiles, installer header/side art, DEB/RPM menu entry, extension toolbar button and add-on manager.
-`apply_to_source.py` replaces **all 40 images** of the Firefox ESR 153 branding template at their original pixel sizes. Preview: `branding/preview.png`.
-
+## Run from source
 ```bash
-pip install -r branding/requirements.txt
-python3 branding/generate.py      # re-render branding/generated/, extension icons and preview after editing the SVGs
+python -m venv .venv && . .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -e ".[dev]"
+python -m iuk_browser                                # or: iuk-browser [--private] [--data-dir DIR] [URL ...]
+pytest -q
 ```
 
-## How sync and the vault work
-
-1. You enter the same **user name** and **secret key** on each device.
-2. **Argon2id** (64 MiB, 3 passes, 1 lane, salt derived from the user name; cross-checked against the reference libargon2) yields 512 bits: the first 256 become the **AES-256-GCM key** (never leaves the device, non-extractable), the last 256 the **server token**. Knowing the token tells you nothing about the key. Vaults created by 1.0 used PBKDF2 and are **migrated automatically** the next time they are unlocked (see CHANGELOG).
-3. Bookmarks and logins merge per item (last write wins, tombstones for deletes, 90-day clean-up), are encrypted, and are uploaded with optimistic concurrency (`If-Match`). The server sees only ciphertext.
-4. The vault is also encrypted at rest on the device and decrypted only in memory after you unlock. It locks on every restart.
-
-Bookmarks are keyed by URL and keep their folder path (Toolbar / Menu / Other). Passwords are keyed by `site|username`, so the same login created on two devices merges instead of duplicating.
-
-**Choose a strong key.** Anyone holding the encrypted blob can guess offline. Use the built-in generator (32 random characters) and store the key safely: it cannot be recovered. A mistyped key on a *new* device does not error; it is simply a different, empty account. If nothing syncs, re-check the key.
-
-## QR pairing
-
-On a set-up device: toolbar **QR** button (or Settings → *Pair another device*) → re-enter your key → a QR appears for 90 seconds. On the new device: toolbar icon → **Scan pairing QR from another device** → camera, image file or pasted code → confirm → it joins and syncs.
-The QR contains your key: only show it to your own device, never post a screenshot. Re-entering the key means an unlocked but unattended browser cannot reveal it.
-
-## Relay server
-
-```bash
-PORT=8787 HOST=127.0.0.1 DATA_DIR=/var/lib/iuk-browser node server/server.js
-```
-Put it behind HTTPS, for example Caddy: `sync.example.com { reverse_proxy 127.0.0.1:8787 }`, and set `TRUST_PROXY=1`. On each device: toolbar icon → *Set up IUK Browser* → same user name, key and server URL.
-
-## Development
-
-```bash
-npm install
-npm test                 # crypto (both KDFs, known-answer), merge, relay, two-device sync, PBKDF2->Argon2id migration, QR pairing
-npm run lint             # web-ext lint
-npx web-ext run --source-dir extension
-```
-
-| Shortcut | Action |
+## Install
+| Platform | How |
 |---|---|
-| `Ctrl+Shift+L` | Fill the saved login on this page |
-| `Alt+Shift+I` | Toggle color invert on all sites |
+| Debian / Ubuntu | `sudo apt install ./iuk-browser_<v>-1_amd64.deb`, or use the apt repository ([docs/RELEASING.md](docs/RELEASING.md)) |
+| Fedora / RHEL | `sudo dnf install ./iuk-browser-<v>-1.x86_64.rpm`, or the dnf repository |
+| Any Linux | `chmod +x iuk-browser-<v>-x86_64.AppImage && ./iuk-browser-<v>-x86_64.AppImage` |
+| Windows | run `iuk-browser-<v>-setup.exe` (no administrator rights needed); the app then updates itself |
+| macOS | experimental: `.dmg` from the release (signed and notarized only if you configured Apple credentials) |
 
-## Publishing and releasing
+The program, process, window class and desktop entry are all named `iuk-browser`.
 
-- Push over SSH: [docs/GITHUB.md](docs/GITHUB.md) or `scripts/publish-to-github.sh git@github.com:<user>/iuk-browser.git`.
-- Release: `git tag v1.1.0 && git push origin v1.1.0` runs `.github/workflows/release.yml`, which builds the extension, **DEB, RPM and the Windows installer + portable zip** and drafts a GitHub Release. See [docs/RELEASING.md](docs/RELEASING.md).
-- Publish the source, the extension, and **source-build** binaries. Do not attach the Mozilla-branded quick bundles.
+## Set up sync
+1. Run the relay on a server you control ([docs/SERVER.md](docs/SERVER.md)): `python3 server/iuk_relay.py` behind HTTPS.
+2. Menu → *Passwords* → *Set up passwords and sync…*: user name, secret key (use **Generate key**), server URL.
+3. On the first device choose *Pair another device (QR)…* (retype your key); on the second device choose *Scan pairing QR…* in the setup
+   dialog. The QR works once and expires after 2 minutes.
+4. Optional: Settings → Sync → *Second factor for the sync relay…*.
+
+**Your key cannot be recovered.** Write it down. A mistyped key on a *new* device does not fail: it simply is a different, empty account.
+
+## How conflicts are resolved
+| Situation | Result |
+|---|---|
+| Device A renames a bookmark, device B moves it and adds a tag | all three changes survive (merge is per field; tags are independent) |
+| B adds a bookmark into a folder that A deleted | the bookmark appears under **Recovered items**; nothing is lost |
+| A moves folder One into Two while B moves Two into One | no cycle: one of them is shown under *Other bookmarks* |
+| Both devices changed the same field | the later change wins; ties break deterministically so every device converges |
+
+Randomized three-device tests check that any sync order ends in the same state.
+
+## Security model
+- The AES key is derived from user name + secret with Argon2id (64 MiB, 3 passes) and never leaves the device; the relay token
+  is an independent half of the same derivation, so knowing it reveals nothing about the key.
+- The relay stores one encrypted blob per account. With the optional second factor, a stolen token alone cannot even download it.
+- Web pages cannot see the autofill code or the Python bridge (isolated script world); the page address used for matching comes
+  from Qt, not from page script; autofill only runs on your explicit action and only in the top frame.
+- With a sync server the pairing QR is **one-time**: it holds a random id and a one-time key, not your account key; the details sit
+  encrypted on the relay (memory only) for 2 minutes and can be fetched once. Retyping your key is still required to show it.
+  Without a server the QR falls back to a direct code that does contain the key (hides after 90 s).
+- The vault locks itself after inactivity (default 15 min) and a lock during a sync cannot leave decrypted data behind.
+- Updates are Ed25519-signed and checked against a SHA-256 before being run; apt/dnf metadata is GPG-signed.
+
+## Repository layout
+| Path | |
+|---|---|
+| `src/iuk_browser/core/` | crypto, merge engine, bookmark store, vault/sync, relay client, updater (no Qt) |
+| `src/iuk_browser/ui/` | main window, dialogs, WebEngine glue and injected scripts |
+| `server/` | the relay (`iuk_relay.py`, Dockerfile, systemd unit) |
+| `packaging/` | PyInstaller spec, nfpm (DEB/RPM), NSIS installer, signing, apt/dnf repository and update-manifest tools |
+| `branding/` | logo artwork and the icon generator |
+| `tools/`, `src/iuk_browser/i18n/` | translations ([docs/TRANSLATING.md](docs/TRANSLATING.md)) |
+| `.github/workflows/` | CI, release, repository publishing |
+| `tests/` | 135 tests, including real WebEngine pages and a real relay |
+
+## Releasing
+`git tag v2.1.0 && git push origin v2.1.0` builds and signs everything and drafts a release; publishing it updates the apt/dnf
+repositories and the update channel. Full guide: [docs/RELEASING.md](docs/RELEASING.md).
 
 ## Known limitations
-
-- The full Gecko compile was not run in the authoring environment; the branding step was verified against the real ESR 153 template, packaging was verified with a stand-in tarball, and the extension/relay/sync logic is covered by tests. Follow the first-build checklist in [TODO.md](TODO.md).
-- The internal binary is still named `firefox`; everything user-visible (name, icons, window class, desktop entry) is IUK Browser.
-- Firefox's built-in password manager is disabled by policy (extensions cannot read it); use *Import CSV* to migrate.
-- Autofill works in the top frame only, on explicit action, to resist hidden-form phishing.
-- Quick bundles use an unsigned add-on workaround that Firefox honors on ESR/unbranded builds; source builds use `--with-unsigned-addon-scopes=app,system` instead.
-- Windows quick bundles keep Firefox's embedded `.exe` icon and launch through a minimized `cmd` window; shortcuts, installer and jump-list use IUK icons. A source build fixes both.
-- Argon2id runs in the extension's background page (about a second); a Web Worker is on the TODO list.
-
-## Roadmap
-
-See [TODO.md](TODO.md) and [CHANGELOG.md](CHANGELOG.md). QR pairing and Argon2id shipped in 1.1.0; next are the first-build verification, one-use pairing tokens, a Web Worker for key derivation and an update channel.
+- Camera scanning, permission prompts, full-screen video, the Windows installer/updater running on a real Windows machine, and
+  signing with a real certificate were **not** exercised in the authoring environment (no camera, Windows host or certificate).
+  The image and pasted-code paths, the signature and checksum logic, the installer compile, and the Linux packages were.
+- The six translations are unreviewed by native speakers.
+- The blocker understands the common subset of Adblock Plus syntax (wildcard, regex and `$domain=` rules are skipped); the starter
+  list is small. No extensions API or sync of browsing history yet ([TODO.md](TODO.md)).
+- The macOS build and notarization were written but **not run** (no macOS machine); Flatpak is not provided.
+- The bundle includes Chromium, so packages are large (about 260 MB).
 
 ## License
-
-MIT for this repository. Firefox/Gecko is MPL-2.0 and remains Mozilla's.
+MIT for this repository. Qt and Chromium are covered by their own licenses (LGPL / BSD and others).
